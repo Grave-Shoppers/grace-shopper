@@ -1,5 +1,5 @@
 const { db } = require('./server/db')
-const Products = require('./server/db/models/products')
+const Products = require('./server/db/models/product')
 
 // dummy data for db
 const products = [{
