@@ -2,7 +2,9 @@ const db = require('../db')
 const Sequelize = require('sequelize')
 
 // register models
-const { Product, Review, User } = require('./models')
+const Product = require('../models/product')
+const Review = require('../models/review')
+const User = require('../models/user')
 
 const Purchases = db.define('purchases', {
   status: {
@@ -20,4 +22,7 @@ User.hasMany(Review)
 Product.belongsToMany(User, { through: Purchases })
 User.belongsToMany(Product, { through: Purchases })
 
-module.exports = db
+
+module.exports = {
+  db, User, Product, Review, Purchases
+}
