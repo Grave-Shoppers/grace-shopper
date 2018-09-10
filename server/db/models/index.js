@@ -1,5 +1,3 @@
-const User = require('./user')
-
 /**
  * If we had any associations to make, this would be a great place to put them!
  * ex. if we had another model called BlogPost, we might say:
@@ -13,6 +11,31 @@ const User = require('./user')
  * for example, we can say: const {User} = require('../db/models')
  * instead of: const User = require('../db/models/user')
  */
+
+const db = require('../db')
+const Sequelize = require('sequelize')
+
+// register models
+const Product = require('../models/product')
+const Review = require('../models/review')
+const User = require('../models/user')
+
+const Purchases = db.define('purchases', {
+  status: {
+    type: Sequelize.BOOLEAN,
+    defaultValue: false
+  }
+})
+
+Review.belongsTo(Product)
+Product.hasMany(Review)
+
+Review.belongsTo(User)
+User.hasMany(Review)
+
+Product.belongsToMany(User, { through: Purchases })
+User.belongsToMany(Product, { through: Purchases })
+
 module.exports = {
-  User
+  User, Product, Review, Purchases
 }
