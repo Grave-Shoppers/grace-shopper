@@ -33,6 +33,13 @@ const Product = db.define('product', {
       validate: {
         min: 0
       }
+    },
+    category: {
+      type: Sequelize.STRING,
+      allowNull: false,
+      validate: {
+        notEmpty: true
+      }
     }
   })
 
