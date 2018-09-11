@@ -2,14 +2,14 @@ const db = require('../db')
 const Sequelize = require('sequelize')
 
 // register models
-const Product = require('../models/product')
-const Review = require('../models/review')
-const User = require('../models/user')
+const Product = require('./product')
+const Review = require('./review')
+const User = require('./user')
+const Cart = require('./cart')
 
 const Purchases = db.define('purchases', {
-  status: {
-    type: Sequelize.BOOLEAN,
-    defaultValue: false
+  products: {
+    type: Sequelize.ARRAY(Sequelize.STRING)
   }
 })
 
@@ -19,8 +19,12 @@ Product.hasMany(Review)
 Review.belongsTo(User)
 User.hasMany(Review)
 
-Product.belongsToMany(User, { through: Purchases })
-User.belongsToMany(Product, { through: Purchases })
+Cart.belongsTo(User)
+Product.belongsToMany(User, { through: Cart })
+User.belongsToMany(Product, { through: Cart })
+
+Purchases.belongsTo(User)
+User.hasMany(Purchases)
 
 
 module.exports = {
