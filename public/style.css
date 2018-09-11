@@ -19,3 +19,17 @@ form div {
   margin: 1em;
   display: inline-block;
 }
+
+.tile li {
+  display: inline;
+  float: left;
+  text-align: center;
+
+}
+
+.tile a {
+  display: block;
+  /* padding: 5px; */
+  margin-right: 5px;
+  text-align: center;
+}

@@ -43,4 +43,17 @@ const Product = db.define('product', {
     }
   })
 
+  Product.findByCategory = async function (category) {
+    const Op = Sequelize.Op;
+
+    const foundCategory = await Product.findAll({
+      where: {
+        category: {
+          [Op.eq]: category
+      }
+    }
+    })
+  return foundCategory;
+  }
+
   module.exports = Product
