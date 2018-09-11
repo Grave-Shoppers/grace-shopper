@@ -1,29 +1,12 @@
 'use strict'
-import React, { Component } from 'React'
+import React from 'React'
 import { connect } from 'react-redux'
-import  { getProducts }  from '../store/productReducer'
 
 const mapStateToProps = (state) => ({
   products: state.products
 })
 
-// const mapDispatchToProps = (dispatch) => ({
-//   getProducts: () => dispatch(getProducts())
-
-// })
-
-// class AllProducts extends Component {
-
-//   componentDidMount () {
-//    this.props.getProducts()
-//    console.log('here', this.props)
-//   }
-
-// render () {
-
 export const AllProducts = props => {
-
-  // const {products} = props
 
 return (
 
@@ -51,4 +34,3 @@ return (
 
 export default connect(mapStateToProps)(AllProducts)
 
-// export default connect(mapStateToProps, mapDispatchToProps)(AllProducts)
