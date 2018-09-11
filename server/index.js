@@ -81,6 +81,11 @@ const createApp = () => {
     }
   })
 
+  app.use((req, res, next) => {
+    console.log('SESSION: ', req.session)
+    next()
+  })
+
   // sends index.html
   app.use('*', (req, res) => {
     res.sendFile(path.join(__dirname, '..', 'public/index.html'))
