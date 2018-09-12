@@ -1,6 +1,13 @@
 const db = require('../db')
 const Sequelize = require('sequelize')
 
+const CartProducts = db.define('cartProducts', {
+  quanity: {
+    type: Sequelize.INTEGER,
+    defaultValue: 1
+  }
+})
+
 // register models
 const Product = require('./product')
 const Review = require('./review')
@@ -15,10 +22,8 @@ Review.belongsTo(User)
 User.hasMany(Review)
 
 Cart.belongsTo(User)
-// Product.belongsToMany(User, { through: Cart })
-// User.belongsToMany(Product, { through: Cart })
-Cart.belongsToMany(Product, { through: 'CartProducts' })
-Product.belongsToMany(Cart, { through: 'CartProducts' })
+Cart.belongsToMany(Product, { through: CartProducts })
+Product.belongsToMany(Cart, { through: CartProducts })
 
 
 
