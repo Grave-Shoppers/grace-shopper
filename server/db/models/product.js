@@ -39,6 +39,9 @@ const Product = db.define('product', {
       allowNull: false,
       validate: {
         notEmpty: true
+      },
+      set(value) {
+        this.setDataValue('category', value.this.toLowerCase())
       }
     }
   })
