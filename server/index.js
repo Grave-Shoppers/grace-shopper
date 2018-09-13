@@ -57,7 +57,7 @@ const createApp = () => {
       secret: process.env.SESSION_SECRET || 'my best friend is Cody',
       store: sessionStore,
       resave: false,
-      saveUninitialized: false
+      saveUninitialized: true
     })
   )
   app.use(passport.initialize())
@@ -79,6 +79,11 @@ const createApp = () => {
     } else {
       next()
     }
+  })
+
+  app.use((req, res, next) => {
+    console.log('SESSION: ', req.session)
+    next()
   })
 
   // sends index.html

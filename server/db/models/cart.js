@@ -2,16 +2,9 @@ const db = require('../db');
 const Sequelize = require('sequelize');
 
 const Cart = db.define('cart', {
-  quantity: {
-    type: Sequelize.INTEGER,
-    allowNull: false
-  },
-  price: {
-    type: Sequelize.DOUBLE,
-    allowNull: false,
-    validate: {
-      min: 0.01
-    }
+  status: {
+    type: Sequelize.ENUM('open', 'closed'),
+    defaultValue: 'open'
   }
 })
 
