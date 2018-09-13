@@ -1,6 +1,7 @@
 const router = require('express').Router()
 const Cart = require('../db/models/cart')
 const User = require('../db/models/user')
+const { CartProducts } = require('../db/models')
 
 module.exports = router
 
@@ -48,16 +49,18 @@ router.post('/', async (req, res, next) => {
 })
 
 router.put('/:productId', async (req, res, next) => {
-  const userId = req.sessionID
+  const sessionId = req.sessionID
   const productId = req.params.productId
   try {
-    const product = await Cart.findAll({
-      where: {
-        userId,
-        productId
-      }
-    })
-    const updatedCart = await product.update({ quantity: req.body.quantity })
+    let userId = req.user
+    if (!userId) {
+      const user = await User.findAll({ where: { sessionId }})
+      userId = user[0].id
+    } else { userId = userId.id }
+    const cart = await Cart.findAll({ where: { userId, status: 'open' } })
+    const cartId = cart[0].id
+    const product = await CartProducts.findAll({ where: { cartId, productId } })
+    const updatedCart = await product[0].update({ quantity: req.body.quantity })
     res.send(updatedCart)
   } catch (error) {
     next(error)
