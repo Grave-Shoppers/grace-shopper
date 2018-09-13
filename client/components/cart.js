@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 // import { CartProducts } from '../server/db/models'
-import { getCart } from '../store/productReducer'
+import { getCart, removeFromCart } from '../store/productReducer-irene'
 
 const mapStateToProps = (state) => ({
   products: state.products,
@@ -10,7 +10,10 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   getInitialProducts: () => {
-    dispatch(getCart)
+    dispatch(getCart())
+  },
+  removeProductFromCart: (productId) => {
+    dispatch(removeFromCart(productId))
   }
 })
 
@@ -20,6 +23,7 @@ class Cart extends Component {
     this.state = {
       products: []
     }
+    this.removeProduct = this.removeProduct.bind(this)
   }
 
   componentDidMount() {
@@ -27,21 +31,14 @@ class Cart extends Component {
     this.props.getInitialProducts()
   }
 
+  removeProduct(productId) {
+    this.props.removeProductFromCart(productId)
+  }
+
   render() {
-    console.log(this.state)
-    return (
-      this.props.loaded
-        ? (
-          <div>
-            {
-              this.props.products.map(product => {
-                return (<div key={product.id}>{product.name}</div>)
-              })
-            }
-          </div>
-        )
-        : <div>Loading...</div>
-    )
+    return <div>
+      <button type="submit" productId="1" onClick={() => { this.removeProduct(1) }}>Delete</button>
+    </div>
   }
 }
 
