@@ -27,6 +27,25 @@ router.get('/', async (req, res, next) => {
   }
 })
 
+router.put('/:productId', async (req, res, next) => {
+  const sessionId = req.sessionID
+  const productId = req.params.productId
+  try {
+    let userId = req.user
+    if (!userId) {
+      const user = await User.findAll({ where: { sessionId }})
+      userId = user[0].id
+    } else { userId = userId.id }
+    const cart = await Cart.findAll({ where: { userId, status: 'open' } })
+    const cartId = cart[0].id
+    const product = await CartProducts.findAll({ where: { cartId, productId } })
+    const updatedCart = await product[0].update({ quantity: req.body.quantity })
+    res.send(updatedCart)
+  } catch (error) {
+    next(error)
+  }
+})
+
 router.delete('/:productId', async (req, res, next) => {
   const sessionId = req.sessionID
   const productId = req.params.productId
