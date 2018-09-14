@@ -27,13 +27,39 @@ router.get('/', async (req, res, next) => {
   }
 })
 
+router.post('/:productId', async (req, res, next) => {
+  const sessionId = req.sessionID
+  let userId = req.user
+  try {
+    if (!userId) {
+      const user = await User.findOrCreate({ where: { sessionId: sessionId } })
+      userId = user[0].dataValues.id
+    } else {
+      userId = userId.id
+    }
+    const cart = await Cart.findOrCreate({
+      where: {
+        userId,
+        status: 'open'
+      }
+    })
+    await CartProducts.create({
+      productId: req.params.productId,
+      cartId: cart[0].id
+    })
+    res.status(201).send('created!')
+  } catch (err) {
+    next(err)
+  }
+})
+
 router.put('/:productId', async (req, res, next) => {
   const sessionId = req.sessionID
   const productId = req.params.productId
   try {
     let userId = req.user
     if (!userId) {
-      const user = await User.findAll({ where: { sessionId }})
+      const user = await User.findAll({ where: { sessionId } })
       userId = user[0].id
     } else { userId = userId.id }
     const cart = await Cart.findAll({ where: { userId, status: 'open' } })
