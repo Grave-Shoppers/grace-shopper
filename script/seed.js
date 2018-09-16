@@ -16,35 +16,35 @@ async function seed() {
   const products = await Promise.all([
     Product.create({
       name: "Brach's Classic Candy Corn, 40 oz. Bag",
-      price: 10.99,
+      price: 1099,
       description: "Yum",
       quantity: 50,
       category: "candy"
     }),
     Product.create({
       name: "Gummy Bears, package of 100",
-      price: 15.99,
+      price: 1599,
       description: "Yum",
       quantity: 50,
       category: "candy"
     }),
     Product.create({
       name: "Wonder Woman",
-      price: 45.99,
+      price: 4599,
       description: "Yay",
       quantity: 50,
       category: "costume"
     }),
     Product.create({
       name: "Taco",
-      price: 20.99,
+      price: 2099,
       description: "Aww",
       quantity: 50,
       category: "pet-costume"
     }),
     Product.create({
       name: "Skull",
-      price: 10.99,
+      price: 1099,
       description: "Ahh",
       quantity: 50,
       category: "decoration"

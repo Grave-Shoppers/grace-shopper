@@ -6,6 +6,8 @@ const GOT_PRODUCT = 'GOT_PRODUCT';
 const ADDED_TO_CART = 'ADDED_TO_CART'
 const GOT_CART = 'GOT_CART'
 const ADD_TO_CART = 'ADD_TO_CART'
+const REMOVE_FROM_CART = 'REMOVE_FROM_CART'
+const CHANGE_CART_QUANTITY = 'CHANGE_CART_QUANTITY'
 
 //action creators
 export const gotProducts = (products) => ({
@@ -19,13 +21,15 @@ export const gotProduct = (product) => ({
 });
 
 export const addedToCart = () => ({ type: ADDED_TO_CART })
-export const gotCart = (products) => ({ type: GOT_CART, products })
+export const gotCart = (products) => {
+	return { type: GOT_CART, products }
+}
 export const addCart = (product) => ({ type: ADD_TO_CART, product })
-
+export const removedFromCart = (products) => ({ type: REMOVE_FROM_CART, products })
+export const changedCartQuantity = () => ({ type: CHANGE_CART_QUANTITY })
 
 //thunks
 
-//get all products
 export const getProducts = () => {
 	return async (dispatch) => {
 		try {
@@ -53,32 +57,48 @@ export const addToCart = (product) => {
 export const getCart = () => {
 	return async (dispatch) => {
 		try {
-			const response = await axios.get('/api/cart/:id')
-			dispatch(gotCart(response.data))
+			const cart = await axios.get('/api/cart')
+			if (cart.data[0]) {
+				const cartId = cart.data[0].id
+				const response = await axios.get(`/api/cart/${cartId}`)
+				const data = response.data
+				const products = data[0].products
+				dispatch(gotCart(products))
+			}
 		} catch (err) {
 			console.error(err)
 		}
 	}
 }
 
+export const removeFromCart = (productId) => {
+	return async (dispatch) => {
+		try {
+			const response = await axios.delete(`/api/cart/${productId}`)
+			dispatch(removedFromCart(response))
+		} catch (err) {
+			console.error(err)
+		}
+	}
+}
 
-//get products by category
-// export const getProductsByCategory = (category) => {
-//   return async (dispatch) => {
-//     try {
-//       const responses = await axios.get('/api/)
-//     } catch (err) {
-//       console.error(err)
-//     }
-//   }
-// }
+export const changeCartQuantity = (productId, quantity) => {
+	return async (dispatch) => {
+		try {
+			const response = await axios.put(`/api/cart/${productId}`, { quantity })
+			console.log('in change quantity thunk', response)
+			dispatch(changedCartQuantity())
+		} catch (err) {
+			console.error(err)
+		}
+	}
+}
 
-//reducer
-
+//--------reducer
 const initialState = {
 	products: [],
   loaded: false,
-  cart: {},
+  cart: [],
   selectedProduct: {imageUrl: '', name: '', price: '', id: '', quantity: ''},
   newProduct: { name: '', price: '', imageUrl: '', description: '', quantity: '', category: '' },
   toAdd: []
@@ -92,18 +112,24 @@ const products = (state = initialState, action) => {
 		case GOT_PRODUCT: {
 			return {
 				...state,
-				products: [ ...state.products, action.product ]
+				products: [...state.products, action.product]
 			};
-    }
-    case GOT_CART: {
-      return { ...state, products: action.products, loaded: true }
-    }
-    case ADD_TO_CART: {
-      return { ...state, toAdd: action.product }
-    }
-    case ADDED_TO_CART: {
-      return {...state, toAdd: []}
-    }
+		}
+		case GOT_CART: {
+			return { ...state, cart: action.products, loaded: true }
+		}
+		case ADD_TO_CART: {
+			return { ...state, toAdd: action.product }
+		}
+		case ADDED_TO_CART: {
+			return { ...state, toAdd: [] }
+		}
+		case REMOVE_FROM_CART: {
+			return { ...state, cart: [...action.products] }
+		}
+		case CHANGE_CART_QUANTITY: {
+			return { ...state }
+		}
 		default:
 			return state;
 	}
