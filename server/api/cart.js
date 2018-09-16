@@ -1,10 +1,11 @@
 const router = require('express').Router()
 const Cart = require('../db/models/cart')
 const User = require('../db/models/user')
+const Product = require('../db/models/product')
 const { CartProducts } = require('../db/models')
 
 module.exports = router
-
+//get cart, not orders
 router.get('/', async (req, res, next) => {
   console.log(req.sessionID)
   const sessionId = req.sessionID
@@ -15,11 +16,30 @@ router.get('/', async (req, res, next) => {
       console.log(user)
       userId = user[0].dataValues.id
       console.log(userId)
-      const products = await Cart.findAll({ where: { userId } })
+      const products = await Cart.findAll({ where: { userId, status: 'open' } })
       res.status(200).json(products)
     } else {
       userId = userId.id
-      const products = await Cart.findAll({ where: { userId } })
+      const products = await Cart.findAll({ where: { userId, status: 'open' } })
+      res.status(200).json(products)
+    }
+  } catch (err) {
+    next(err)
+  }
+})
+
+router.get('/:cartId', async (req, res, next) => {
+  const sessionId = req.sessionID
+  let userId = req.user
+  try {
+    if (!userId) {
+      const user = await User.findOrCreate({ where: { sessionId: sessionId } })
+      userId = user[0].dataValues.id
+      const products = await Cart.findAll({ where: { id: req.params.cartId }, include: [Product] })
+      res.status(200).json(products)
+    } else {
+      userId = userId.id
+      const products = await Cart.findAll({ where: { id: req.params.cartId }, include: [Product] })
       res.status(200).json(products)
     }
   } catch (err) {
