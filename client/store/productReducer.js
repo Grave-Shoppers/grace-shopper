@@ -20,7 +20,7 @@ export const gotProduct = (product) => ({
 
 export const addedToCart = () => ({ type: ADDED_TO_CART })
 export const gotCart = (products) => ({ type: GOT_CART, products })
-export const addCart = (product) => ({ typer: ADD_TO_CART, product })
+export const addCart = (product) => ({ type: ADD_TO_CART, product })
 
 
 //thunks
@@ -39,10 +39,10 @@ export const getProducts = () => {
 	};
 };
 
-export const addToCart = () => {
+export const addToCart = (product) => {
   return async (dispatch) => {
     try {
-      const response = await axios.post('/api/cart')
+      const response = await axios.post('/api/cart', product)
       dispatch(addToCart(response.data))
     } catch (err) {
       console.error(err)
@@ -77,7 +77,9 @@ export const getCart = () => {
 
 const initialState = {
 	products: [],
-	loaded: false,
+  loaded: false,
+  cart: {},
+  selectedProduct: {imageUrl: '', name: '', price: '', id: '', quantity: ''},
   newProduct: { name: '', price: '', imageUrl: '', description: '', quantity: '', category: '' },
   toAdd: []
 };

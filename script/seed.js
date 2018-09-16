@@ -19,35 +19,35 @@ async function seed() {
       price: 10.99,
       description: "Yum",
       quantity: 50,
-      category: "Candy"
+      category: "candy"
     }),
     Product.create({
       name: "Gummy Bears, package of 100",
       price: 15.99,
       description: "Yum",
       quantity: 50,
-      category: "Candy"
+      category: "candy"
     }),
     Product.create({
       name: "Wonder Woman",
       price: 45.99,
       description: "Yay",
       quantity: 50,
-      category: "Costume"
+      category: "costume"
     }),
     Product.create({
       name: "Taco",
       price: 20.99,
       description: "Aww",
       quantity: 50,
-      category: "Pet Costume"
+      category: "pet-costume"
     }),
     Product.create({
       name: "Skull",
       price: 10.99,
       description: "Ahh",
       quantity: 50,
-      category: "Decoration"
+      category: "decoration"
     })
   ])
 
