@@ -23,6 +23,7 @@ class CreateAccount extends Component {
                 required
               />
             </div>
+            <br />
             <div className="form-group">
               <label>password</label>
               <input
@@ -32,6 +33,7 @@ class CreateAccount extends Component {
                 required
               />
             </div>
+            <br />
             <div className="form-group">
               <label>first name</label>
               <input
@@ -41,6 +43,7 @@ class CreateAccount extends Component {
                 required
               />
             </div>
+            <br />
             <div className="form-group">
               <label>last name</label>
               <input
@@ -50,6 +53,7 @@ class CreateAccount extends Component {
                 required
               />
             </div>
+            <br />
             <div className="form-group">
               <label>address</label>
               <input
@@ -59,6 +63,7 @@ class CreateAccount extends Component {
                 required
               />
             </div>
+            <br />
             <button type="submit" className="btn btn-block btn-primary">Create account</button>
           </form>
         </div>
@@ -78,8 +83,6 @@ class CreateAccount extends Component {
   }
 }
 
-const mapState = null;
-
 const mapDispatch = dispatch => {
   return {
     signup (credentials) {
@@ -88,4 +91,4 @@ const mapDispatch = dispatch => {
   }
 };
 
-export default connect(mapState, mapDispatch)(CreateAccount);
+export default connect(null, mapDispatch)(CreateAccount);
