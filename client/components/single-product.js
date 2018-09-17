@@ -25,7 +25,7 @@ export const SingleProduct = (props) => {
       </div>
       <img src={selectedProduct.imageUrl} width="200" height="200" />
 
-      <div>Price: {selectedProduct.price}</div>
+      <div>Price: {selectedProduct.price / 100}</div>
       <div>Description: {selectedProduct.description}</div>
       <div>
         <ReviewForm selectedProduct={selectedProduct} />

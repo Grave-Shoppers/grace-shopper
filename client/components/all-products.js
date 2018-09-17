@@ -19,7 +19,9 @@ class AllProducts extends Component {
   constructor() {
     super();
     this.state = {
-      selectedProduct: []
+      selectedProduct: {
+        id: ''
+      }
     };
   }
   componentDidMount() {
@@ -27,13 +29,13 @@ class AllProducts extends Component {
   }
   addProduct(id) {
     this.setState({
-      selectedProduct: [
+      selectedProduct: {
         // imageUrl: imageUrl,
         // name: name,
         // price: price,
-        id
+        id: id
         // quantity: quantity
-      ]
+      }
     });
 
   }
@@ -41,9 +43,8 @@ class AllProducts extends Component {
 
 
   render() {
-    if (this.state.selectedProduct.length === 1) {
-      const productId = Number(this.state.selectedProduct)
-      console.log('HEREEEE', this.state.selectedProduct)
+    const productId = Number(this.state.selectedProduct.id)
+    if (productId !== 0 || NaN) {
       this.props.addToCart(productId)
     }
     return (
@@ -87,7 +88,7 @@ class AllProducts extends Component {
                     <img src={product.imageUrl} width="100" height="100" />
                   </a>
                   <div> {product.name} </div>
-                  <div>Price: ${product.price}</div>
+                  <div>Price: ${product.price / 100}</div>
                   <div>Description: {product.description}</div>
                   <button type="button" onClick={this.addProduct.bind(
                     this,

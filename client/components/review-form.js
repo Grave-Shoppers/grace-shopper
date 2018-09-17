@@ -14,19 +14,19 @@ export class ReviewForm extends Component {
     this.handleSubmit = this.handleSubmit.bind(this)
   }
 
-  handleChange(event) {
+  async handleChange(event) {
     this.setState({
       [event.target.className]: event.target.value
     })
-  }
-  handleSubmit = async event => {
-    event.preventDefault()
-    const productId = Number(this.props.match.params.id)
-    this.props.addReview(this.state, productId)
     await this.setState({
       content: this.props.review.content,
       stars: this.props.review.stars
     })
+  }
+  handleSubmit = event => {
+    event.preventDefault()
+    const productId = Number(this.props.match.params.id)
+    this.props.addReview(this.state, productId)
   }
 
   render() {
@@ -55,16 +55,7 @@ export class ReviewForm extends Component {
           <option value={5}>5</option>
         </select>
         <button
-          type="button"
-          onClick={event => {
-            event.preventDefault()
-            this.props.addReview(
-              this.state.stars,
-              this.state.content,
-              this.props.selectedProduct.id
-            )
-          }}
-        >
+          type="button">
           Submit
         </button>
       </form>
@@ -74,8 +65,8 @@ export class ReviewForm extends Component {
 
 const mapDispatchToProps = dispatch => {
   return {
-    addReview(stars, body, id) {
-      dispatch(addReview(stars, body, id))
+    addReview(stars, content, id) {
+      dispatch(addReview(stars, content, id))
     }
   }
 }

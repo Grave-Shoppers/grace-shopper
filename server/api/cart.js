@@ -63,11 +63,11 @@ router.post('/:productId', async (req, res, next) => {
         status: 'open'
       }
     })
-    await CartProducts.create({
+    const CartProduct = await CartProducts.create({
       productId: req.params.productId,
       cartId: cart[0].id
     })
-    res.status(201).send('created!')
+    res.status(201).json(CartProduct)
   } catch (err) {
     next(err)
   }
