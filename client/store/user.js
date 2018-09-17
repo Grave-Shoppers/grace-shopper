@@ -56,6 +56,21 @@ export const logout = () => async dispatch => {
   }
 }
 
+export const signup = credentials => async dispatch => {
+  let res
+  try {
+    res = await axios.post('/auth/signup', credentials)
+  } catch (authError) {
+    return dispatch(getUser({error: authError}))
+  }
+  try {
+    dispatch(getUser(res.data))
+    history.push('/home')
+  } catch (dispatchOrHistoryErr) {
+    console.error(dispatchOrHistoryErr)
+  }
+}
+
 /**
  * REDUCER
  */

@@ -18,36 +18,36 @@ async function seed() {
       name: "Brach's Classic Candy Corn, 40 oz. Bag",
       price: 1099,
       description: "Yum",
-      quantity: 5,
-      category: "Candy"
+      quantity: 50,
+      category: "candy"
     }),
     Product.create({
       name: "Gummy Bears, package of 100",
       price: 1599,
       description: "Yum",
       quantity: 50,
-      category: "Candy"
+      category: "candy"
     }),
     Product.create({
       name: "Wonder Woman",
       price: 4599,
       description: "Yay",
       quantity: 50,
-      category: "Costume"
+      category: "costume"
     }),
     Product.create({
       name: "Taco",
       price: 2099,
       description: "Aww",
       quantity: 50,
-      category: "Pet Costume"
+      category: "pet-costume"
     }),
     Product.create({
       name: "Skull",
       price: 1099,
       description: "Ahh",
       quantity: 50,
-      category: "Decoration"
+      category: "decoration"
     })
   ])
 

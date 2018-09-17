@@ -10,25 +10,27 @@ export const Category = (props) => {
 
   if(selectedCategory){
     return (
-      <div className="container">
+      <div className="wrapper">
+      <div className="column">
       <h1>{category}</h1>
-    <ul className="tile">
+      <div className="parent">
       {
        selectedCategory.map(product => (
+        <div className="child" key={product.id}>
 
-          <li key={product.id}>
-          {product.name}
-          <a className="tile" href={`/products/${product.id}`} >
-          <img src={product.imageUrl} width="100" height="100"/>
-          </a>
-          </li>
+							<a className="child" href={`/products/${product.id}`}>
+								<img src={product.imageUrl} width="100" height="100" />
+							</a>
+							<div> {product.name} </div>
+							<div>Price: ${product.price}</div>
+							<div>Description: {product.description}</div>
+              </div>
+
         ))
       }
-    </ul>
-
-
+  </div>
     </div>
-
+      </div>
     )
 }
 }
