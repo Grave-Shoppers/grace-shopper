@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { withRouter, Route, Switch } from 'react-router-dom'
 import PropTypes from 'prop-types'
-import { Login, Signup, AllProducts, Category, SingleProduct, Cart, Home, Orders } from './components'
+import { Login, Signup, AllProducts, Category, SingleProduct, Cart, Checkout, Home, Orders } from './components'
 import { me } from './store'
 import { getProducts, getCart } from './store/productReducer'
 
@@ -23,9 +23,9 @@ class Routes extends Component {
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
         <Route exact path="/products" component={AllProducts} />
-        <Route path="/products/:category" component={Category} />
         <Route path="/products/:id" component={SingleProduct} />
         <Route path="/cart" component={Cart} />
+        <Route path="/checkout" component={Checkout} />
         <Route path="/" component={Home} />
         {isLoggedIn && (
           <Switch>
@@ -37,9 +37,9 @@ class Routes extends Component {
         {/* {isAdmin && (
           <Switch>
             {/* Routes placed here are only available after logging in as an admin */}
-            {/* <Route path="/home" component={Home} /> */}
-            {/* put route for all orders - possibly want to to have open orders & closed orders & have ability to change the status*/}
-            {/* put route for inventory where admins can update /*}
+        {/* <Route path="/home" component={Home} /> */}
+        {/* put route for all orders - possibly want to to have open orders & closed orders & have ability to change the status*/}
+        {/* put route for inventory where admins can update /*}
           {/* </Switch> */}
         {/* )} */}
       </Switch>
