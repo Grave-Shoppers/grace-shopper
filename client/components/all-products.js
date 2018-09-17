@@ -22,31 +22,32 @@ class AllProducts extends Component {
       selectedProduct: {
         id: ''
       }
-    };
+    }
+    this.addProducts = this.addProduct.bind(this)
   }
   componentDidMount() {
     this.props.getProducts();
   }
   addProduct(id) {
-    this.setState({
-      selectedProduct: {
-        // imageUrl: imageUrl,
-        // name: name,
-        // price: price,
-        id: id
-        // quantity: quantity
-      }
-    });
-
+    // this.setState({
+    //   selectedProduct: {
+    //     // imageUrl: imageUrl,
+    //     // name: name,
+    //     // price: price,
+    //     id: id
+    //     // quantity: quantity
+    //   }
+    // });
+    this.props.addToCart(id)
   }
 
 
 
   render() {
-    const productId = Number(this.state.selectedProduct.id)
-    if (productId !== 0 || NaN) {
-      this.props.addToCart(productId)
-    }
+    // const productId = Number(this.state.selectedProduct.id)
+    // if (productId !== 0 || productId !== NaN) {
+    //   this.props.addToCart(productId)
+    // }
     return (
       <div className="wrapper">
         <div id="left" className="column">
@@ -90,14 +91,9 @@ class AllProducts extends Component {
                   <div> {product.name} </div>
                   <div>Price: ${product.price / 100}</div>
                   <div>Description: {product.description}</div>
-                  <button type="button" onClick={this.addProduct.bind(
-                    this,
-                    // product.imageUrl,
-                    // product.name,
-                    // product.price,
-                    product.id
-                    // product.quantity
-                  )}
+                  <button type="button" onClick={() => {
+                    this.addProduct(product.id)
+                  }}
                     className="btn btn-primary btn-sm">
                     Add to Cart
 							</button>
