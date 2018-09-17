@@ -40,7 +40,7 @@ async function seed() {
       price: 2099,
       description: "Aww",
       quantity: 50,
-      category: "pet costume"
+      category: "pet-costume"
     }),
     Product.create({
       name: "Skull",

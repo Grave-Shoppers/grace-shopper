@@ -35,7 +35,7 @@ const Product = db.define('product', {
     }
   },
   category: {
-    type: Sequelize.ENUM('decoration', 'pet costume', 'costume', 'candy'),
+    type: Sequelize.ENUM('decoration', 'pet-costume', 'costume', 'candy'),
     allowNull: false,
     validate: {
       notEmpty: true
