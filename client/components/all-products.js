@@ -33,8 +33,11 @@ class AllProducts extends Component {
 				price: price,
 				id: id,
 				quantity: quantity
-			}
+      }
+
     });
+
+    this.props.addToCart(this.state.selectedProduct)
   }
 
   function() {
