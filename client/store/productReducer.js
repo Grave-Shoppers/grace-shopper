@@ -46,11 +46,13 @@ export const getProducts = () => {
 	};
 };
 
+
 export const addToCart = (productId) => {
 	return async (dispatch) => {
 		try {
 			const id = Number(productId)
 			const response = await axios.post(`/api/cart/${id}`)
+
 			dispatch(addToCart(response.data))
 		} catch (err) {
 			console.error(err)
