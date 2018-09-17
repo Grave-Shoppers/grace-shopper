@@ -9,6 +9,7 @@ const ADD_TO_CART = 'ADD_TO_CART'
 const REMOVE_FROM_CART = 'REMOVE_FROM_CART'
 const CHANGE_CART_QUANTITY = 'CHANGE_CART_QUANTITY'
 
+
 //action creators
 export const gotProducts = (products) => ({
 	type: GOT_PRODUCTS,
@@ -28,6 +29,8 @@ export const addCart = (product) => ({ type: ADD_TO_CART, product })
 export const removedFromCart = (products) => ({ type: REMOVE_FROM_CART, products })
 export const changedCartQuantity = () => ({ type: CHANGE_CART_QUANTITY })
 
+
+
 //thunks
 
 export const getProducts = () => {
@@ -43,10 +46,13 @@ export const getProducts = () => {
 	};
 };
 
-export const addToCart = (product) => {
+
+export const addToCart = (productId) => {
 	return async (dispatch) => {
 		try {
-			const response = await axios.post('/api/cart', product)
+			const id = Number(productId)
+			const response = await axios.post(`/api/cart/${id}`)
+
 			dispatch(addToCart(response.data))
 		} catch (err) {
 			console.error(err)
@@ -93,6 +99,7 @@ export const changeCartQuantity = (productId, quantity) => {
 		}
 	}
 }
+
 
 //--------reducer
 const initialState = {
