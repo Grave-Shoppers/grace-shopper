@@ -1,9 +1,5 @@
 const router = require('express').Router()
-<<<<<<< HEAD
 const { User, Cart, Product } = require('../db/models')
-=======
-const { User } = require('../db/models')
->>>>>>> 746f8fd35d9fcb6e47173f5ec85423f645ca23f6
 module.exports = router
 
 router.get('/', async (req, res, next) => {
@@ -20,7 +16,6 @@ router.get('/', async (req, res, next) => {
   }
 })
 
-<<<<<<< HEAD
 router.get('/orders', async (req, res, next) => {
   try {
     const userId = req.user.id
@@ -52,7 +47,6 @@ router.get('/orders/:id', async (req, res, next) => {
   }
 })
 
-=======
 router.put('/:id', async (req, res, next) => {
   try {
     const id = req.params.id
@@ -63,4 +57,3 @@ router.put('/:id', async (req, res, next) => {
     next(error)
   }
 })
->>>>>>> 746f8fd35d9fcb6e47173f5ec85423f645ca23f6
