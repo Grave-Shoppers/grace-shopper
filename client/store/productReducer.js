@@ -44,14 +44,14 @@ export const getProducts = () => {
 };
 
 export const addToCart = (product) => {
-  return async (dispatch) => {
-    try {
-      const response = await axios.post('/api/cart', product)
-      dispatch(addToCart(response.data))
-    } catch (err) {
-      console.error(err)
-    }
-  }
+	return async (dispatch) => {
+		try {
+			const response = await axios.post('/api/cart', product)
+			dispatch(addToCart(response.data))
+		} catch (err) {
+			console.error(err)
+		}
+	}
 }
 
 export const getCart = () => {
@@ -97,11 +97,11 @@ export const changeCartQuantity = (productId, quantity) => {
 //--------reducer
 const initialState = {
 	products: [],
-  loaded: false,
-  cart: [],
-  selectedProduct: {imageUrl: '', name: '', price: '', id: '', quantity: ''},
-  newProduct: { name: '', price: '', imageUrl: '', description: '', quantity: '', category: '' },
-  toAdd: []
+	loaded: false,
+	cart: [],
+	selectedProduct: { imageUrl: '', name: '', price: '', id: '', quantity: '' },
+	newProduct: { name: '', price: '', imageUrl: '', description: '', quantity: '', category: '' },
+	toAdd: []
 };
 
 const products = (state = initialState, action) => {

@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 // import { CartProducts } from '../server/db/models'
+import { Link } from 'react-router-dom'
 import { getCart, removeFromCart, changeCartQuantity } from '../store/productReducer'
 
 const mapStateToProps = (state) => {
@@ -73,7 +74,7 @@ class Cart extends Component {
     for (let i = 0; i < cart.length; i++) {
       total = total + (cart[i].cartProducts.quantity * (cart[i].price / 100))
     }
-    return total
+    return Math.floor(total * 100) / 100
   }
 
   render() {
@@ -94,7 +95,7 @@ class Cart extends Component {
                   <div>{product.name}</div>
                   <img src={product.imageUrl} width={250} />
                   <div>{`Unit Price: $${product.price / 100}`}</div>
-                  <div>{`Price for Item: $${(product.price / 100) * product.cartProducts.quantity}`}</div>
+                  <div>{`Price for Item: $${Math.floor(((product.price / 100) * product.cartProducts.quantity) * 100) / 100}`}</div>
                   <button type="submit" productid={product.id} onClick={() => {
                     this.removeProduct(product.id)
                     this.props.getInitialProducts()
@@ -103,7 +104,8 @@ class Cart extends Component {
               ))
             }
             <div>Total: {this.calculateTotal()}</div>
-            <button type="submit">Check Out</button>
+            <Link to={{ pathname: "/checkout", state: { total: this.calculateTotal() } }}>Check Out</Link>
+            {/* <button type="submit">Check Out</button> */}
           </div>
           : <div>Loading Your Cart</div>
       }
