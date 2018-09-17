@@ -1,5 +1,6 @@
 const router = require('express').Router()
-const {Product} = require('../db/models')
+const Product = require('../db/models/product')
+const Review = require('../db/models/review')
 module.exports = router
 
 router.get('/', async (req, res, next) => {
@@ -13,13 +14,53 @@ router.get('/', async (req, res, next) => {
 
 router.get('/:id', async (req, res, next) => {
   try {
-      const id = req.params.id
-      const foundProduct = await Product.findById(id)
-      if (!foundProduct) res.sendStatus(404)
-      res.status(200).json(foundProduct)
+    const id = req.params.id
+    const foundProduct = await Product.findById(id)
+    console.log('heeeeeeeeeeere', id)
+    res.json(foundProduct)
   } catch (err) {
-      res.status(err)
-      next(err)
+    res.status(err)
+    next(err)
   }
 })
 
+router.post('/:id/review', async (req, res, next) => {
+  try {
+    const id = req.params.id
+    const newReview = Review.create(req.body, {
+      where: {
+        productId: id
+      }
+    })
+
+    res.json(newReview)
+  } catch (err) {
+    next(err)
+  }
+})
+
+router.get('/category/:categoryId', async (req, res, next) => {
+  try {
+    const category = req.params.categoryId
+    const foundCategory = await Product.findByCategory(category)
+    if (!foundCategory) res.sendStatus(404)
+    res.status(200).json(foundCategory)
+  } catch (err) {
+    next(err)
+  }
+})
+
+// router.get('/:categoryId/:id', async (req, res, next) => {
+//   try {
+//     const category = req.params.categoryId
+//     const id = req.params.id
+//     const findCategory = await Product.findByCategory(category)
+//     if (findCategory) {
+//       const idSearch = await Product.findById(id)
+//       if (!idSearch) res.sendStatus(404)
+//       res.status(200).json(idSearch)
+//     }
+//   } catch (err) {
+//     next(err)
+//   }
+// })

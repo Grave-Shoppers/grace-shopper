@@ -1,9 +1,10 @@
-import React, {Component} from 'react'
-import {connect} from 'react-redux'
-import {withRouter, Route, Switch} from 'react-router-dom'
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { withRouter, Route, Switch } from 'react-router-dom'
 import PropTypes from 'prop-types'
-import {Login, Signup, UserHome} from './components'
-import {me} from './store'
+import { Login, Signup, AllProducts, Category, SingleProduct, Cart, Checkout, Home, Orders } from './components'
+import { me } from './store'
+import { getProducts, getCart } from './store/productReducer'
 
 /**
  * COMPONENT
@@ -14,21 +15,33 @@ class Routes extends Component {
   }
 
   render() {
-    const {isLoggedIn} = this.props
+    const { isLoggedIn } = this.props
 
     return (
       <Switch>
         {/* Routes placed here are available to all visitors */}
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
+        <Route exact path="/products" component={AllProducts} />
+        <Route path="/products/:id" component={SingleProduct} />
+        <Route path="/cart" component={Cart} />
+        <Route path="/checkout" component={Checkout} />
+        <Route path="/" component={Home} />
         {isLoggedIn && (
           <Switch>
             {/* Routes placed here are only available after logging in */}
-            <Route path="/home" component={UserHome} />
+            <Route path="/home" component={Home} />
+            <Route path="/orders" component={Orders} />
           </Switch>
         )}
-        {/* Displays our Login component as a fallback */}
-        <Route component={Login} />
+        {/* {isAdmin && (
+          <Switch>
+            {/* Routes placed here are only available after logging in as an admin */}
+        {/* <Route path="/home" component={Home} /> */}
+        {/* put route for all orders - possibly want to to have open orders & closed orders & have ability to change the status*/}
+        {/* put route for inventory where admins can update /*}
+          {/* </Switch> */}
+        {/* )} */}
       </Switch>
     )
   }
@@ -41,7 +54,8 @@ const mapState = state => {
   return {
     // Being 'logged in' for our purposes will be defined has having a state.user that has a truthy id.
     // Otherwise, state.user will be an empty object, and state.user.id will be falsey
-    isLoggedIn: !!state.user.id
+    isLoggedIn: !!state.user.id,
+    products: state.products
   }
 }
 
@@ -49,6 +63,8 @@ const mapDispatch = dispatch => {
   return {
     loadInitialData() {
       dispatch(me())
+      dispatch(getProducts())
+      dispatch(getCart())
     }
   }
 }
