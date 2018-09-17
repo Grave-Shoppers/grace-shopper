@@ -2,9 +2,9 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { withRouter, Route, Switch } from 'react-router-dom'
 import PropTypes from 'prop-types'
-import { Login, Signup, UserHome, AllProducts, Category, SingleProduct, Cart, Home } from './components'
+import { Login, Signup, AllProducts, Category, SingleProduct, Cart, Home } from './components'
 import { me } from './store'
-import { getProducts } from './store/productReducer'
+import { getProducts, getCart } from './store/productReducer'
 
 /**
  * COMPONENT
@@ -64,6 +64,7 @@ const mapDispatch = dispatch => {
     loadInitialData() {
       dispatch(me())
       dispatch(getProducts())
+      dispatch(getCart())
     }
   }
 }
