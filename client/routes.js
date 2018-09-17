@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { withRouter, Route, Switch } from 'react-router-dom'
 import PropTypes from 'prop-types'
-import { Login, Signup, UserHome, AllProducts, Category, SingleProduct, Cart } from './components'
+import { Login, Signup, UserHome, AllProducts, Category, SingleProduct, Cart, Home } from './components'
 import { me } from './store'
 import { getProducts } from './store/productReducer'
 
@@ -26,15 +26,22 @@ class Routes extends Component {
         <Route path="/products/:category" component={Category} />
         <Route path="/products/:id" component={SingleProduct} />
         <Route path="/cart" component={Cart} />
+        <Route path="/" component={Home} />
         {isLoggedIn && (
           <Switch>
             {/* Routes placed here are only available after logging in */}
-            <Route path="/home" component={UserHome} />
+            <Route path="/home" component={Home} />
+            {/* put route for previous orders here */}
           </Switch>
         )}
-        <AllProducts />
-        {/* Displays our Login component as a fallback */}
-        {/* <Route component={Login} /> */}
+        {/* {isAdmin && (
+          <Switch>
+            {/* Routes placed here are only available after logging in as an admin */}
+            {/* <Route path="/home" component={Home} /> */}
+            {/* put route for all orders - possibly want to to have open orders & closed orders & have ability to change the status*/}
+            {/* put route for inventory where admins can update /*}
+          {/* </Switch> */}
+        {/* )} */}
       </Switch>
     )
   }
