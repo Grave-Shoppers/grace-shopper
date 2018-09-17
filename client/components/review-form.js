@@ -1,7 +1,7 @@
 'use strict'
-import React, { Component } from 'react'
-import { connect } from 'react-redux'
-import { addReview } from '../store/reviewReducer'
+import React, {Component} from 'react'
+import {connect} from 'react-redux'
+import {postReview, addReview} from '../store/reviewReducer'
 
 export class ReviewForm extends Component {
   constructor(props) {
@@ -14,48 +14,41 @@ export class ReviewForm extends Component {
     this.handleSubmit = this.handleSubmit.bind(this)
   }
 
-  async handleChange(event) {
+  handleChange(event) {
     this.setState({
-      [event.target.className]: event.target.value
+      [event.target.name]: event.target.value
     })
-    await this.setState({
-      content: this.props.review.content,
-      stars: this.props.review.stars
-    })
+    // this.props.addReview(this.state)
   }
   handleSubmit = event => {
     event.preventDefault()
-    const productId = Number(this.props.match.params.id)
-    this.props.addReview(this.state, productId)
+    const productId = Number(this.props.selectedProduct.id)
+    const review = {
+      stars: event.target.stars.value,
+      content: event.target.content.value,
+      productId: productId
+    }
+    console.log('heyyy', this.props.selectedProduct)
+    this.props.postReview(review, productId)
+    event.target.content.value = ''
   }
 
   render() {
     return (
       <form onSubmit={this.handleSubmit}>
-        <div>
-          <label>Review This Product</label>
-          <input
-            className="content"
-            type="text"
-            value={this.state.content}
-            onChange={this.handleChange}
-          />
-        </div>
+        <label>Review This Product</label>
+        <input name="content" type="text" onChange={this.handleChange} />
+
         <br />
         <label>RATINGS</label>
-        <select
-          className="stars"
-          value={this.state.stars}
-          onChange={this.handleChange}
-        >
-          <option value={1}>1</option>
-          <option value={2}>2</option>
-          <option value={3}>3</option>
-          <option value={4}>4</option>
-          <option value={5}>5</option>
+        <select name="stars" onChange={this.handleChange}>
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
         </select>
-        <button
-          type="button">
+        <button type="submit" value="submit">
           Submit
         </button>
       </form>
@@ -63,16 +56,16 @@ export class ReviewForm extends Component {
   }
 }
 
-const mapDispatchToProps = dispatch => {
-  return {
-    addReview(stars, content, id) {
-      dispatch(addReview(stars, content, id))
-    }
-  }
-}
+const mapDispatchToProps = dispatch => ({
+  addReivew: content => dispatch(addReview(content)),
+  postReview: (review, productId) => dispatch(postReview(review, productId))
+  //  dispatch(addReview({stars: 1, content: '' }))
+})
+
 const mapStateToProps = state => {
   return {
-    review: state.review
+    reviews: state.review,
+    newReview: state.newReview
   }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(ReviewForm)

@@ -1,31 +1,31 @@
-'use strict';
-import React, { Component } from 'React';
-import { connect } from 'react-redux';
-import { getProducts, addToCart } from '../store/productReducer';
-import { Link, Route, Switch } from 'react-router-dom'
-import { Category } from './category'
+'use strict'
+import React, {Component} from 'React'
+import {connect} from 'react-redux'
+import {getProducts, addToCart} from '../store/productReducer'
+import {Link, Route, Switch} from 'react-router-dom'
+import {Category} from './category'
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
   products: state.products,
   selectedProduct: state.selectedProduct
-});
+})
 
-const mapDispatchToProps = (dispatch) => ({
+const mapDispatchToProps = dispatch => ({
   getProducts: () => dispatch(getProducts()),
-  addToCart: (selectedProduct) => dispatch(addToCart(selectedProduct))
-});
+  addToCart: selectedProduct => dispatch(addToCart(selectedProduct))
+})
 
 class AllProducts extends Component {
   constructor() {
-    super();
+    super()
     this.state = {
       selectedProduct: {
         id: ''
       }
-    };
+    }
   }
   componentDidMount() {
-    this.props.getProducts();
+    this.props.getProducts()
   }
   addProduct(id) {
     this.setState({
@@ -36,11 +36,8 @@ class AllProducts extends Component {
         id: id
         // quantity: quantity
       }
-    });
-
+    })
   }
-
-
 
   render() {
     const productId = Number(this.state.selectedProduct.id)
@@ -52,7 +49,6 @@ class AllProducts extends Component {
         <div id="left" className="column">
           <div className="top-left">
             <h2>View by Category</h2>
-
           </div>
           <div className="bottom">
             <ul>
@@ -81,8 +77,7 @@ class AllProducts extends Component {
           </div>
           <div className="parent">
             <div className="bottom">
-
-              {this.props.products.products.map((product) => (
+              {this.props.products.products.map(product => (
                 <div className="child" key={product.id}>
                   <a className="child" href={`/products/${product.id}`}>
                     <img src={product.imageUrl} width="100" height="100" />
@@ -90,25 +85,28 @@ class AllProducts extends Component {
                   <div> {product.name} </div>
                   <div>Price: ${product.price / 100}</div>
                   <div>Description: {product.description}</div>
-                  <button type="button" onClick={this.addProduct.bind(
-                    this,
-                    // product.imageUrl,
-                    // product.name,
-                    // product.price,
-                    product.id
-                    // product.quantity
-                  )}
-                    className="btn btn-primary btn-sm">
+                  <button
+                    type="button"
+                    onClick={this.addProduct.bind(
+                      this,
+                      // product.imageUrl,
+                      // product.name,
+                      // product.price,
+                      product.id
+                      // product.quantity
+                    )}
+                    className="btn btn-primary btn-sm"
+                  >
                     Add to Cart
-							</button>
+                  </button>
                 </div>
               ))}
             </div>
           </div>
         </div>
       </div>
-    );
+    )
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(AllProducts);
+export default connect(mapStateToProps, mapDispatchToProps)(AllProducts)
