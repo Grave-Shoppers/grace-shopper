@@ -1,6 +1,7 @@
 'use strict'
 import React from 'React'
 import { connect } from 'react-redux'
+import ReviewForm from './review-form'
 
 export const SingleProduct = (props) => {
 
@@ -13,21 +14,25 @@ export const SingleProduct = (props) => {
   const selectedProduct = props.products.products.find((product) => product.id === productId);
 
 
-  console.log('selected product', selectedProduct)
 
-    if(!props.products.loaded) return <h1>Loading...</h1>
+  if (!props.products.loaded) return <h1>Loading...</h1>
 
-    return (
+  return (
 
     <div>
-      <h1>HELLO</h1>
+      <div>
+        <h3>{selectedProduct.name}</h3>
+      </div>
+      <img src={selectedProduct.imageUrl} width="200" height="200" />
 
-          <img src={selectedProduct.imageUrl} width="100" height="100"/>
-
-          <div>Price: {selectedProduct.price}</div>
-          <div>Description: {selectedProduct.description}</div>
+      <div>Price: {selectedProduct.price / 100}</div>
+      <div>Description: {selectedProduct.description}</div>
+      <div>
+        <ReviewForm selectedProduct={selectedProduct} />
+      </div>
     </div>
-    )
+
+  )
 }
 
 const mapStateToProps = state => ({
