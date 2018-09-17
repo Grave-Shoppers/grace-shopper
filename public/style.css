@@ -34,6 +34,18 @@ form div {
   text-align: center;
 }
 
+.center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 400px;
+  height: 400px
+}
+
+.text-center {
+  text-align: center;
+}
+
 .wrapper {
   height: 100%;
   overflow: hidden;  /*makes the body non-scrollable (we will add scrolling to the sidebar and main content containers)*/
