@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 // import { CartProducts } from '../server/db/models'
+import { Link } from 'react-router-dom'
 import { getCart, removeFromCart, changeCartQuantity } from '../store/productReducer'
 
 const mapStateToProps = (state) => {
@@ -103,7 +104,8 @@ class Cart extends Component {
               ))
             }
             <div>Total: {this.calculateTotal()}</div>
-            <button type="submit">Check Out</button>
+            <Link to={{ pathname: "/checkout", state: { total: this.calculateTotal() } }}>Check Out</Link>
+            {/* <button type="submit">Check Out</button> */}
           </div>
           : <div>Loading Your Cart</div>
       }
