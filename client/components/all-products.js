@@ -1,9 +1,9 @@
 'use strict'
-import React, { Component } from 'React'
-import { connect } from 'react-redux'
-import { getProducts, addToCart } from '../store/productReducer'
-import { Link, Route, Switch } from 'react-router-dom'
-import { Category } from './category'
+import React, {Component} from 'React'
+import {connect} from 'react-redux'
+import {getProducts, addToCart} from '../store/productReducer'
+import {Link, Route, Switch} from 'react-router-dom'
+import {Category} from './category'
 
 const mapStateToProps = state => ({
   products: state.products,
@@ -12,7 +12,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   getProducts: () => dispatch(getProducts()),
-  addToCart: (selectedProduct) => dispatch(addToCart(selectedProduct))
+  addToCart: selectedProduct => dispatch(addToCart(selectedProduct))
 })
 
 class AllProducts extends Component {
@@ -24,7 +24,6 @@ class AllProducts extends Component {
       }
     }
     this.addProduct = this.addProduct.bind(this)
-
   }
   componentDidMount() {
     this.props.getProducts()
@@ -64,7 +63,10 @@ class AllProducts extends Component {
                 <Link to="/products/category/decoration">Decoration</Link>
               </li>
               <Switch>
-                <Route path="/products/category/:category" component={Category} />
+                <Route
+                  path="/products/category/:category"
+                  component={Category}
+                />
               </Switch>
             </ul>
           </div>
@@ -84,10 +86,13 @@ class AllProducts extends Component {
                   <div> {product.name} </div>
                   <div>Price: ${product.price / 100}</div>
                   <div>Description: {product.description}</div>
-                  <button type="button" onClick={() => {
-                    this.addProduct(product.id)
-                  }}
-                    className="btn btn-primary btn-sm">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      this.addProduct(product.id)
+                    }}
+                    className="btn btn-primary btn-sm"
+                  >
                     Add to Cart
                   </button>
                 </div>

@@ -1,13 +1,18 @@
 import axios from 'axios'
 
+//ACTION TYPES
 const ADD_REVIEW = 'ADD_REVIEW'
-const GET_REVIEWS = 'GET_REVIEWS'
+const GOT_REVIEWS = 'GOT_REVIEWS'
 const GOT_REVIEW = 'GOT_REVIEW'
 
+//ACTION CREATORS
 export const addReview = content => ({type: ADD_REVIEW, content})
-export const getReviews = reviews => ({type: GET_REVIEWS, reviews})
+
+export const gotReviews = reviews => ({type: GOT_REVIEWS, reviews})
+
 export const gotReview = review => ({type: GOT_REVIEW, review})
 
+//THUNKS
 export const postReview = (newReview, productId) => {
   return async dispatch => {
     const response = await axios.post(
@@ -20,29 +25,50 @@ export const postReview = (newReview, productId) => {
   }
 }
 
-export const getAllReviews = productId => {
+export const getReviews = productId => {
   return async dispatch => {
-    const response = await axios.get(`/api/products/${productId}/review`)
-    const data = response.data
-    const action = getReviews(data)
-    dispatch(action)
+    try {
+      const response = await axios.get(`/api/products/${productId}/review`)
+      const data = response.data
+      const action = gotReviews(data)
+      dispatch(action)
+    } catch (err) {
+      console.log(err)
+    }
   }
 }
+
+//REDUCER
 
 const initialState = {
   newReview: {stars: 1, content: ''},
   reviews: []
 }
 
-export default function reviewReducer(state = initialState, action) {
+const reviewReducer = (state = initialState, action) => {
   switch (action.type) {
     case ADD_REVIEW: {
       return {...state, newReview: action.content}
     }
-    case GET_REVIEWS: {
-      return {...state, reviews: [...state.reviews, action.reviews]}
+    case GOT_REVIEWS: {
+      return {...state, reviews: action.reviews}
     }
     default:
       return state
   }
 }
+
+export default reviewReducer
+
+// export default function reviewReducer(state = initialState, action) {
+//   switch (action.type) {
+//     case ADD_REVIEW: {
+//       return {...state, newReview: action.content}
+//     }
+//     case GOT_REVIEWS: {
+//       return {...state, reviews: action.content}
+//     }
+//     default:
+//       return state
+//   }
+// }
