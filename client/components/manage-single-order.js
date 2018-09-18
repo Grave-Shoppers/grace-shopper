@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { fetchOrder } from '../store/orders'
+import { fetchOrder, fetchSingleOrderAdmin } from '../store/orders'
 import { Link, Route } from 'react-router-dom'
 import { withRouter } from 'react-router'
 import axios from 'axios'
@@ -9,11 +9,12 @@ class SingleOrder extends Component {
   constructor() {
     super()
     this.state = { order: {} }
+    this.handleOrderStatusChange = this.handleOrderStatusChange.bind.this
   }
 
   async componentDidMount() {
     const orderId = this.props.match.params.id
-    const res = await axios.get(`/api/orders/${orderId}`)
+    const res = await axios.get(`/api/orders/all/${orderId}`)
     const order = res.data
     this.setState(order)
   }
@@ -25,6 +26,20 @@ class SingleOrder extends Component {
       total = total + (products[i].cartProducts.quantity * (products[i].price / 100))
     }
     return Math.floor(total*100)/100
+  }
+
+  handleSubmit(evt) {
+    evt.preventDefault()
+    const updatedOrder = this.state
+    const orderId = this.props.match.params.id
+    this.props.fetchSingleOrderAdmin(updatedOrder, productId)
+    this.props.fetchSingleOrderAdmin()
+  }
+
+  handleOrderStatusChange(evt) {
+    this.setState({
+      order: { status: evt.target.value } }
+    )
   }
 
   render() {
@@ -58,6 +73,22 @@ class SingleOrder extends Component {
           })
         }
         <h4>Total: ${this.calculateTotal()}</h4>
+
+        <form onSubmit={this.handleSubmit}>
+            <div>
+              <div>
+                <label>Change Order Status</label>
+              </div>
+              <select defaultValue={order.status.toUpperCase()} onChange={this.handleOrderStatusChange}>
+                <option>open</option>
+                <option>processing</option>
+                <option>cancelled</option>
+                <option>completed</option>
+              </select>
+            </div>
+            <hr />
+            <button type="submit">Submit</button>
+          </form>
       </div>
     )
   }
