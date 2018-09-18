@@ -4,6 +4,7 @@ const Sequelize = require('sequelize')
 const Op = Sequelize.Op
 module.exports = router
 
+//ADMIN ROUTE
 router.get('/all', async (req, res, next) => {
   try {
     const orders = await Cart.findAll({
@@ -16,6 +17,36 @@ router.get('/all', async (req, res, next) => {
     next(err)
   }
 })
+
+router.get('/all/:id', async (req, res, next) => {
+  try {
+    const orderId = req.params.id
+    const orders = await Cart.findAll({
+      where: {
+        id: orderId,
+        status: { [Op.ne]: 'open' }
+      },
+      include: [ Product ]
+    })
+    res.json(orders)
+  } catch (err) {
+    console.error(err)
+  }
+ })
+
+ router.put('/all:id', async (req, res, next) => {
+   try {
+     const orderId = req.params.id
+     const order = await Cart.findAll({
+       where: { id: orderId},
+       include: [Product]
+     })
+     const updatedOrder = await order.updatedOrder({...req.body})
+     res.json(updatedOrder)
+   } catch (err) {
+     next(err)
+   }
+ })
 
 router.get('/:id', async (req, res, next) => {
   try {

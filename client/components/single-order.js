@@ -41,7 +41,7 @@ class SingleOrder extends Component {
       <div>
         <h2>Your Order</h2>
         <h4>Order #: {orderId} </h4>
-        <h4>Order Status: {order.status}</h4>
+        <h4>Order Status: {order.status.toUpperCase()}</h4>
         <h4>Order Details:</h4>
         {
           products.map(product => {

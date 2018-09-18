@@ -38,7 +38,7 @@ class Orders extends Component {
                   <div key={order.id}>
                     <h4>Order #: {order.id}</h4>
                     <h5>Date: {new Date(order.createdAt).toDateString()}</h5>
-                    <h5>Order Status: {order.status}</h5>
+                    <h5>Order Status: {order.status.toUpperCase()}</h5>
                     <Link to={`/manageOrders/${order.id}`}>View Order Details</Link>
                   </div>
                   <br/>
