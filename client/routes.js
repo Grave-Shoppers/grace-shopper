@@ -2,21 +2,10 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { withRouter, Route, Switch } from 'react-router-dom'
 import PropTypes from 'prop-types'
-import {
-  Login,
-  Signup,
-  AllProducts,
-  Category,
-  SingleProduct,
-  Cart,
-  Checkout,
-  Home,
-  Orders,
-  ManageProduct,
-  ManageSingleProduct
-} from './components'
+import { Login, Signup, AllProducts, Category, SingleProduct, Cart, Checkout, Home, Orders, SingleOrder, ManageProduct, ManageSingleProduct, ManageOrders, ManageSingleOrder, AdminUsers } from './components'
 import { me } from './store'
 import { getProducts, getCart } from './store/productReducer'
+import { fetchOrders } from './store/orders'
 
 /**
  * COMPONENT
@@ -35,28 +24,26 @@ class Routes extends Component {
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
         <Route path="/products/category/:category" component={Category} />
-        <Route path="/products/:singleId" component={SingleProduct} />
         <Route exact path="/products" component={AllProducts} />
+        <Route path="/products/:singleId" component={SingleProduct} />
         <Route path="/cart" component={Cart} />
         <Route path="/checkout" component={Checkout} />
+        <Route exact path="/" component={Home} />
+        <Route exact path="/orders" component={Orders} />
+        <Route exact path="/orders/:id" component={SingleOrder} />
         <Route exact path="/manageProduct" component={ManageProduct} />
-        <Route path="/manageProduct/:singleId" component={ManageSingleProduct} />
-        {/* <Route path="/" component={Home} /> */}
+        <Route path="/manageProduct/:id" component={ManageSingleProduct} />
+        <Route exact path="/manageOrders" component={ManageOrders} />
+        <Route path="/manageOrders/:id" component={ManageSingleOrder} />
+        <Route path="/manageUser" component={AdminUsers} />
         {isLoggedIn && (
           <Switch>
             {/* Routes placed here are only available after logging in */}
-            <Route path="/home" component={Home} />
-            <Route path="/orders" component={Orders} />
+            <Route path="/" component={Home} />
           </Switch>
         )}
-        {/* {isAdmin && (
-          <Switch>
-            {/* Routes placed here are only available after logging in as an admin */}
-        {/* <Route path="/home" component={Home} /> */}
-        {/* put route for all orders - possibly want to to have open orders & closed orders & have ability to change the status*/}
-        {/* put route for inventory where admins can update /*}
-          {/* </Switch> */}
-        {/* )} */}
+        {/* Displays our HomePage component as a fallback */}
+        <Route component={Home} />
       </Switch>
     )
   }
@@ -70,7 +57,7 @@ const mapState = state => {
     // Being 'logged in' for our purposes will be defined has having a state.user that has a truthy id.
     // Otherwise, state.user will be an empty object, and state.user.id will be falsey
     isLoggedIn: !!state.user.id,
-    products: state.products
+    // products: state.products
   }
 }
 

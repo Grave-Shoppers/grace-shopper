@@ -1,5 +1,5 @@
 import axios from 'axios';
-
+//ieieieieie
 //action types
 const GOT_PRODUCTS = 'GOT_PRODUCTS';
 const GOT_PRODUCT = 'GOT_PRODUCT';
@@ -9,10 +9,7 @@ const ADD_TO_CART = 'ADD_TO_CART'
 const REMOVE_FROM_CART = 'REMOVE_FROM_CART'
 const CHANGE_CART_QUANTITY = 'CHANGE_CART_QUANTITY'
 const CLOSE_CART = 'CLOSE_CART'
-
-//action types for admin
 const UPDATE_PRODUCT = 'UPDATE_PRODUCT'
-
 
 //action creators
 export const gotProducts = (products) => ({
@@ -32,10 +29,11 @@ export const gotCart = (products) => {
 export const addCart = (product) => ({ type: ADD_TO_CART, product })
 export const removedFromCart = (products) => ({ type: REMOVE_FROM_CART, products })
 export const changedCartQuantity = () => ({ type: CHANGE_CART_QUANTITY })
-export const closedCart = () => ({ type: CLOSE_CART })
-
-
-export const updatedProduct = (payload, productId) => ({ type: UPDATE_PRODUCT, payload, productId })
+export const closedCart = () => {
+	console.log('got into close cart action creater')
+	return ({ type: CLOSE_CART })
+}
+export const updatedProduct = (updatedProduct, productId) => ({ type: UPDATE_PRODUCT, updatedProduct, productId })
 
 //thunks
 
@@ -108,6 +106,7 @@ export const changeCartQuantity = (productId, quantity) => {
 export const closeCart = (cartId) => {
 	return async (dispatch) => {
 		try {
+			console.log('got into close cart thunk')
 			const response = await axios.put(`/api/cart/${cartId}/closed`, { status: 'closed' })
 			dispatch(closedCart())
 		} catch (err) {
@@ -119,7 +118,6 @@ export const closeCart = (cartId) => {
 export const updateProduct = (payload, productId) => {
 	return async (dispatch) => {
 		try {
-			console.log('IN THE THUNK:', 'payload:', payload)
 			const response = await axios.put(`/api/products/${productId}`, { ...payload })
 			const editedProduct = response.data
 			dispatch(updatedProduct(editedProduct, productId))
@@ -128,7 +126,6 @@ export const updateProduct = (payload, productId) => {
 		}
 	}
 }
-
 
 //--------reducer
 const initialState = {
@@ -167,13 +164,7 @@ const products = (state = initialState, action) => {
 			return { ...state }
 		}
 		case CLOSE_CART: {
-			return { ...state, cart: [] }
-		}
-		case UPDATE_PRODUCT: {
-			return {
-				...state, products: [...state.products.map(product =>
-					product.id !== action.productId ? product : action.payload)]
-			}
+			return { ...state }
 		}
 		default:
 			return state;

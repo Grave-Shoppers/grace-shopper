@@ -4,6 +4,9 @@ module.exports = router
 
 router.get('/', async (req, res, next) => {
   try {
+    if (req.user.isAdmin === false) {
+      res.send(404, 'You do not have access ')
+    }
     const users = await User.findAll({
       // explicitly select only the id and email fields - even though
       // users' passwords are encrypted, it won't help if we just
@@ -16,15 +19,61 @@ router.get('/', async (req, res, next) => {
   }
 })
 
+router.get('/:id', async (req, res, next) => {
+  try {
+    if (req.user.isAdmin === false) {
+      res.send(404, 'You do not have access ')
+    }
+    const id = req.params.id
+    const user = await User.findById(id)
+    res.json(user)
+  } catch (err) {
+    next(err)
+  }
+})
+
+router.delete('/:id', async (req, res, next) => {
+  try {
+    if (req.user.isAdmin === false) {
+      res.send(404, 'You do not have access to that')
+    }
+    const id = req.params.id
+    const deleted = await User.destroy({
+      where: {
+        id: id
+      }
+    })
+    res.json(`User ${id} Deleted`)
+  } catch (err) {
+    next(err)
+  }
+})
+
+// router.put('/:id', async (req, res, next) => {
+//   try {
+//     const id = req.params.id
+//     const foundUser = await User.findById(id)
+//     const update = foundUser.update(req.body)
+//     foundUser.makeAdmin()
+//     await User.update
+//   }
+//   catch(err){
+//     next(err)
+//   }
+// })
+
 router.get('/orders', async (req, res, next) => {
   try {
+    if (req.user.isAdmin === false) {
+      res.send(404, 'You do not have access to that')
+    }
     const userId = req.user.id
     const orders = await Cart.findAll({
       where: {
         userId: userId,
         status: 'closed'
       },
-      include: [ Product ]
+      include: [Product]
     })
     res.json(orders)
   } catch (err) {
@@ -39,7 +88,7 @@ router.get('/orders/:id', async (req, res, next) => {
       where: {
         id: orderId
       },
-      include: [ Product ]
+      include: [Product]
     })
     res.json(order)
   } catch (err) {

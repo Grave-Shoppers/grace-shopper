@@ -16,11 +16,11 @@ const defaultUser = {}
 /**
  * ACTION CREATORS
  */
-const getUser = user => ({ type: GET_USER, user })
-const removeUser = () => ({ type: REMOVE_USER })
-const updatedUser = (user) => {
+const getUser = user => ({type: GET_USER, user})
+const removeUser = () => ({type: REMOVE_USER})
+const updatedUser = user => {
   console.log('GOT INTO ACTION CREATER', user)
-  return ({ type: UPDATE_USER, user })
+  return {type: UPDATE_USER, user}
 }
 
 /**
@@ -38,9 +38,9 @@ export const me = () => async dispatch => {
 export const auth = (email, password, method) => async dispatch => {
   let res
   try {
-    res = await axios.post(`/auth/${method}`, { email, password })
+    res = await axios.post(`/auth/${method}`, {email, password})
   } catch (authError) {
-    return dispatch(getUser({ error: authError }))
+    return dispatch(getUser({error: authError}))
   }
 
   try {
@@ -66,7 +66,7 @@ export const signup = credentials => async dispatch => {
   try {
     res = await axios.post('/auth/signup', credentials)
   } catch (authError) {
-    return dispatch(getUser({ error: authError }))
+    return dispatch(getUser({error: authError}))
   }
   try {
     dispatch(getUser(res.data))
@@ -89,7 +89,7 @@ export const updateUser = (info, userId) => async dispatch => {
 /**
  * REDUCER
  */
-export default function (state = defaultUser, action) {
+export default function(state = defaultUser, action) {
   switch (action.type) {
     case GET_USER:
       return action.user

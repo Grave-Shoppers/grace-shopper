@@ -2,7 +2,6 @@ import React, { Component } from 'React'
 import { connect } from 'react-redux'
 
 import { getProducts, updateProduct } from '../store/productReducer'
-
 const initialState = {
   name: '',
   price: 0,
@@ -15,7 +14,7 @@ const initialState = {
 class ManageSingleProduct extends Component {
   constructor(props) {
     super(props)
-    const productId = Number(props.match.params.singleId)
+    const productId = Number(props.match.params.id)
     const selectedProduct = props.products.products.filter(
       product => product.id === productId
     )
@@ -37,7 +36,7 @@ class ManageSingleProduct extends Component {
   handleSubmit(evt) {
     evt.preventDefault()
     const newProduct = this.state
-    const productId = Number(this.props.match.params.singleId)
+    const productId = Number(this.props.match.params.id)
     this.props.submitUpdatedProduct(newProduct, productId)
     this.props.getProducts()
   }
@@ -62,7 +61,7 @@ class ManageSingleProduct extends Component {
   }
 
   render() {
-    const productId = Number(this.props.match.params.singleId)
+    const productId = Number(this.props.match.params.id)
 
     const selectedProduct = this.props.products.products.filter(
       product => product.id === productId

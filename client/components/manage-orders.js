@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { fetchOrders } from '../store/orders'
+import { fetchAllOrders } from '../store/orders'
 import { Link, Route } from 'react-router-dom'
 import { withRouter } from 'react-router'
 
@@ -9,7 +9,7 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  fetchInitialOrders: () => dispatch(fetchOrders())
+  fetchAllInitialOrders: () => dispatch(fetchAllOrders())
 })
 
 class Orders extends Component {
@@ -18,7 +18,7 @@ class Orders extends Component {
   }
 
   componentDidMount() {
-    this.props.fetchInitialOrders()
+    this.props.fetchAllInitialOrders()
     console.log("order comp mount")
   }
 
@@ -29,7 +29,7 @@ class Orders extends Component {
 
     return(
       <div>
-        <h2>Your Past Orders</h2>
+        <h2>All Orders</h2>
         <div>
           {
             orders.map(order => {
@@ -39,7 +39,7 @@ class Orders extends Component {
                     <h4>Order #: {order.id}</h4>
                     <h5>Date: {new Date(order.createdAt).toDateString()}</h5>
                     <h5>Order Status: {order.status.toUpperCase()}</h5>
-                    <Link to={`/orders/${order.id}`}>View Order Details</Link>
+                    <Link to={`/manageOrders/${order.id}`}>View Order Details</Link>
                   </div>
                   <br/>
                 </ul>
