@@ -1,9 +1,9 @@
 'use strict'
-import React, {Component} from 'React'
-import {connect} from 'react-redux'
-import {getProducts, addToCart} from '../store/productReducer'
-import {Link, Route, Switch} from 'react-router-dom'
-import {Category} from './category'
+import React, { Component } from 'React'
+import { connect } from 'react-redux'
+import { getProducts, addToCart } from '../store/productReducer'
+import { Link, Route, Switch } from 'react-router-dom'
+import { Category } from './category'
 
 const mapStateToProps = state => ({
   products: state.products,
@@ -24,21 +24,25 @@ class AllProducts extends Component {
       }
     }
     this.addProduct = this.addProduct.bind(this)
+
   }
   componentDidMount() {
     this.props.getProducts()
   }
   addProduct(id) {
-    this.setState({
-      selectedProduct: {
-        id: id
-      }
-    })
+    // this.setState({
+    //   selectedProduct: {
+    //     // imageUrl: imageUrl,
+    //     // name: name,
+    //     // price: price,
+    //     id: id
+    //     // quantity: quantity
+    //   }
+    // });
     this.props.addToCart(id)
   }
 
   render() {
-
     return (
       <div className="wrapper">
         <div id="left" className="column">
@@ -80,11 +84,10 @@ class AllProducts extends Component {
                   <div> {product.name} </div>
                   <div>Price: ${product.price / 100}</div>
                   <div>Description: {product.description}</div>
-                  <button
-                    type="button"
-                    onClick={() => this.addProduct(product.id)}
-                    className="btn btn-primary btn-sm"
-                  >
+                  <button type="button" onClick={() => {
+                    this.addProduct(product.id)
+                  }}
+                    className="btn btn-primary btn-sm">
                     Add to Cart
                   </button>
                 </div>

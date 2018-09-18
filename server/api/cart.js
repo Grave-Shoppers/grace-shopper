@@ -73,6 +73,16 @@ router.post('/:productId', async (req, res, next) => {
   }
 })
 
+router.put('/:cartId/closed', async (req, res, next) => {
+  try {
+    const cart = await Cart.findAll({ where: { id: req.params.cartId } })
+    const closedCart = await cart[0].update({ status: 'closed' })
+    res.send('closed cart!')
+  } catch (err) {
+    console.error(err)
+  }
+})
+
 router.put('/:productId', async (req, res, next) => {
   const sessionId = req.sessionID
   const productId = req.params.productId
