@@ -10,11 +10,13 @@ import {
   SingleProduct,
   Cart,
   Checkout,
+  CheckoutForm,
   Home,
   Orders
 } from './components'
 import {me} from './store'
 import {getProducts, getCart} from './store/productReducer'
+import {Elements, StripeProvider} from 'react-stripe-elements';
 
 /**
  * COMPONENT
@@ -36,7 +38,14 @@ class Routes extends Component {
         <Route path="/products/:singleId" component={SingleProduct} />
         <Route exact path="/products" component={AllProducts} />
         <Route path="/cart" component={Cart} />
-        <Route path="/checkout" component={Checkout} />
+
+        <StripeProvider apiKey="pk_test_ebTZLZh98TAiXri24XvqQpEo">
+          <Elements>
+          <Route path="/checkout" component={CheckoutForm} />
+          </Elements>
+      </StripeProvider>
+
+
         <Route path="/" component={Home} />
         {isLoggedIn && (
           <Switch>
