@@ -5,8 +5,8 @@ const Op = Sequelize.Op
 
 const Cart = db.define('cart', {
   status: {
-    type: Sequelize.ENUM('OPEN', 'PROCESSING', 'CANCELLED', 'COMPLETED'),
-    defaultValue: 'OPEN'
+    type: Sequelize.ENUM('open', 'processing', 'cancelled', 'completed'),
+    defaultValue: 'open'
   }
 })
 
@@ -14,7 +14,7 @@ Cart.getOrdersByUser = function(userId) {
   return Cart.findAll({
     where: {
       userId,
-      status: { [Op.ne]: 'OPEN' }
+      status: { [Op.ne]: 'open' }
     },
     include: [Product]
   })

@@ -4,13 +4,26 @@ const Sequelize = require('sequelize')
 const Op = Sequelize.Op
 module.exports = router
 
+router.get('/all', async (req, res, next) => {
+  try {
+    const orders = await Cart.findAll({
+      where: {
+        status: { [Op.ne]: 'open'}
+      }
+    })
+    res.json(orders)
+  } catch (err) {
+    next(err)
+  }
+})
+
 router.get('/:id', async (req, res, next) => {
   try {
     const orderId = req.params.id
     const order = await Cart.findAll({
       where: {
         id: orderId,
-        status: { [Op.ne]: 'OPEN' }
+        status: { [Op.ne]: 'open' }
       },
       include: [ Product ]
     })
@@ -29,4 +42,5 @@ router.get('/', async (req, res, next) => {
     next(err)
   }
 })
+
 
