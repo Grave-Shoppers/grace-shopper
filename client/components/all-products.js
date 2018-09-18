@@ -12,7 +12,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   getProducts: () => dispatch(getProducts()),
-  addToCart: selectedProduct => dispatch(addToCart(selectedProduct))
+  addToCart: (selectedProduct) => dispatch(addToCart(selectedProduct))
 })
 
 class AllProducts extends Component {
@@ -23,6 +23,7 @@ class AllProducts extends Component {
         id: ''
       }
     }
+    this.addProduct = this.addProduct.bind(this)
   }
   componentDidMount() {
     this.props.getProducts()
@@ -30,20 +31,14 @@ class AllProducts extends Component {
   addProduct(id) {
     this.setState({
       selectedProduct: {
-        // imageUrl: imageUrl,
-        // name: name,
-        // price: price,
         id: id
-        // quantity: quantity
       }
     })
+    this.props.addToCart(id)
   }
 
   render() {
-    const productId = Number(this.state.selectedProduct.id)
-    if (productId !== 0 || NaN) {
-      this.props.addToCart(productId)
-    }
+
     return (
       <div className="wrapper">
         <div id="left" className="column">
@@ -53,19 +48,19 @@ class AllProducts extends Component {
           <div className="bottom">
             <ul>
               <li>
-                <Link to="/products/costume">Costumes</Link>
+                <Link to="/products/category/costume">Costumes</Link>
               </li>
               <li>
-                <Link to="/products/pet-costume">Pet Costumes</Link>
+                <Link to="/products/category/pet-costume">Pet Costumes</Link>
               </li>
               <li>
-                <Link to="/products/candy">Candy</Link>
+                <Link to="/products/category/candy">Candy</Link>
               </li>
               <li>
-                <Link to="/products/decoration">Decoration</Link>
+                <Link to="/products/category/decoration">Decoration</Link>
               </li>
               <Switch>
-                <Route path="/products/:category" component={Category} />
+                <Route path="/products/category/:category" component={Category} />
               </Switch>
             </ul>
           </div>
@@ -87,14 +82,7 @@ class AllProducts extends Component {
                   <div>Description: {product.description}</div>
                   <button
                     type="button"
-                    onClick={this.addProduct.bind(
-                      this,
-                      // product.imageUrl,
-                      // product.name,
-                      // product.price,
-                      product.id
-                      // product.quantity
-                    )}
+                    onClick={() => this.addProduct(product.id)}
                     className="btn btn-primary btn-sm"
                   >
                     Add to Cart
