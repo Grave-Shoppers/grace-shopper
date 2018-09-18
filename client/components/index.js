@@ -18,6 +18,7 @@ export { default as SingleOrder } from './single-order'
 export { default as ManageOrders } from './manage-orders'
 export { default as ManageProduct } from './manage-products'
 export { default as ManageSingleProduct } from './manage-single-product'
+export { default as AddProduct } from './addProduct'
 export { default as ManageSingleOrder } from './manage-single-order'
 export { default as AdminUsers } from './adminUsers'
 

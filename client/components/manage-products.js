@@ -72,6 +72,7 @@ class ManageProducts extends Component {
                 </div>
               ))}
             </div>
+            <Link to="/addProduct">Add A New Product</Link>
           </div>
         </div>
       </div>

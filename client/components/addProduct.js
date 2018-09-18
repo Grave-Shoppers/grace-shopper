@@ -1,7 +1,7 @@
 import React, { Component } from 'React'
 import { connect } from 'react-redux'
 
-import { getProducts, updateProduct } from '../store/productReducer'
+import { addNewProduct } from '../store/productReducer'
 
 const initialState = {
   name: '',
@@ -12,34 +12,23 @@ const initialState = {
   category: ''
 }
 
-class ManageSingleProduct extends Component {
+class AddProduct extends Component {
   constructor(props) {
     super(props)
-    const productId = Number(props.match.params.id)
-    const selectedProduct = props.products.products.filter(
-      product => product.id === productId
-    )
-
-    if (!selectedProduct[0]) {
-      this.state = { ...initialState }
-    }
-    const product = selectedProduct[0]
-    this.state = { ...product }
+    this.state = { ...initialState }
     this.handleSubmit = this.handleSubmit.bind(this)
     this.handleChange = this.handleChange.bind(this)
     this.handleCategoryChange = this.handleCategoryChange.bind(this)
   }
 
   componentDidMount() {
-    this.props.getProducts()
+    // this.props.getProducts()
   }
 
   handleSubmit(evt) {
     evt.preventDefault()
     const newProduct = this.state
-    const productId = Number(this.props.match.params.id)
-    this.props.submitUpdatedProduct(newProduct, productId)
-    this.props.goBack()
+    this.props.addProduct(newProduct)
   }
 
   handleChange(evt) {
@@ -62,21 +51,21 @@ class ManageSingleProduct extends Component {
   }
 
   render() {
-    const productId = Number(this.props.match.params.id)
+    // const productId = Number(this.props.match.params.id)
 
-    const selectedProduct = this.props.products.products.filter(
-      product => product.id === productId
-    )
+    // const selectedProduct = this.props.products.products.filter(
+    //   product => product.id === productId
+    // )
 
-    if (!selectedProduct[0]) {
-      return <h1>loading...</h1>
-    }
-    const product = selectedProduct[0]
+    // if (!selectedProduct[0]) {
+    //   return <h1>loading...</h1>
+    // }
+    // const product = selectedProduct[0]
 
     return (
       <form onSubmit={this.handleSubmit}>
         <div>
-          <h1>Edit {product.name}</h1>
+          <h1>Add New Product</h1>
           <div className="form-field">
             <div className="form-div">
               <label>Product Name</label>
@@ -85,7 +74,7 @@ class ManageSingleProduct extends Component {
               onChange={this.handleChange}
               type="text"
               name="name"
-              placeholder={product.name}
+              placeholder="Product Name"
               value={this.state.name}
             />
           </div>
@@ -98,7 +87,7 @@ class ManageSingleProduct extends Component {
               onChange={this.handleChange}
               type="text"
               name="price"
-              placeholder={product.price}
+              placeholder="000"
               value={this.state.price}
             />
           </div>
@@ -111,7 +100,7 @@ class ManageSingleProduct extends Component {
               onChange={this.handleChange}
               type="text"
               name="imageUrl"
-              placeholder={product.imageUrl}
+              placeholder="Image URL"
               value={this.state.imageUrl}
             />
           </div>
@@ -124,7 +113,7 @@ class ManageSingleProduct extends Component {
               onChange={this.handleChange}
               type="text"
               name="description"
-              placeholder={product.description}
+              placeholder="Product Description"
               value={this.state.description}
             />
           </div>
@@ -137,7 +126,7 @@ class ManageSingleProduct extends Component {
               onChange={this.handleChange}
               type="text"
               name="quantity"
-              placeholder={product.quantity}
+              placeholder="100"
               value={this.state.quantity}
             />
           </div>
@@ -146,7 +135,7 @@ class ManageSingleProduct extends Component {
             <div className="form-div">
               <label>Category</label>
             </div>
-            <select defaultValue={product.category} onChange={this.handleCategoryChange}>
+            <select onChange={this.handleCategoryChange}>
               <option>candy</option>
               <option>costume</option>
               <option>pet-costume</option>
@@ -158,7 +147,7 @@ class ManageSingleProduct extends Component {
           <button
             type="submit"
           >
-            Submit
+            Add Product
         </button>
         </div>
       </form>
@@ -176,13 +165,13 @@ class ManageSingleProduct extends Component {
 }
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
-  getProducts: () => dispatch(getProducts()),
-  submitUpdatedProduct: (updatedProduct, productId) => dispatch(updateProduct(updatedProduct, productId)),
-  goBack: () => dispatch(getProducts()).then(() => { ownProps.history.push('/manageProduct') })
+  addProduct: (newProduct) => dispatch(addNewProduct(newProduct)).then(() => {
+    ownProps.history.push('/manageProduct')
+  })
 })
 
 const mapStateToProps = state => ({
   products: state.products
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(ManageSingleProduct)
+export default connect(mapStateToProps, mapDispatchToProps)(AddProduct)

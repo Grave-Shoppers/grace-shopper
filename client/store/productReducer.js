@@ -10,6 +10,7 @@ const REMOVE_FROM_CART = 'REMOVE_FROM_CART'
 const CHANGE_CART_QUANTITY = 'CHANGE_CART_QUANTITY'
 const CLOSE_CART = 'CLOSE_CART'
 const UPDATE_PRODUCT = 'UPDATE_PRODUCT'
+const ADD_PRODUCT = 'ADD_PRODUCT'
 
 //action creators
 export const gotProducts = (products) => ({
@@ -33,6 +34,7 @@ export const closedCart = () => {
 	return ({ type: CLOSE_CART })
 }
 export const updatedProduct = (updatedProduct, productId) => ({ type: UPDATE_PRODUCT, updatedProduct, productId })
+export const addedNewProduct = (newProduct) => ({ type: ADD_PRODUCT, newProduct })
 
 //thunks
 
@@ -126,6 +128,18 @@ export const updateProduct = (payload, productId) => {
 	}
 }
 
+export const addNewProduct = (payload) => {
+	return async (dispatch) => {
+		try {
+			const response = await axios.post('/api/products', { ...payload })
+			const newProduct = response.data
+			dispatch(addedNewProduct(newProduct))
+		} catch (err) {
+			console.error(err)
+		}
+	}
+}
+
 //--------reducer
 const initialState = {
 	products: [],
@@ -164,6 +178,9 @@ const products = (state = initialState, action) => {
 		}
 		case CLOSE_CART: {
 			return { ...state }
+		}
+		case ADD_PRODUCT: {
+			return { ...state, products: [...state.products, action.newProduct] }
 		}
 		default:
 			return state;
