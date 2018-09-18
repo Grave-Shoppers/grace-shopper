@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { withRouter, Route, Switch } from 'react-router-dom'
 import PropTypes from 'prop-types'
-import { Login, Signup, AllProducts, Category, SingleProduct, Cart, Checkout, Home, Orders, SingleOrder, ManageProduct, ManageSingleProduct, ManageOrders, ManageSingleOrder } from './components'
+import { Login, Signup, AllProducts, Category, SingleProduct, Cart, Checkout, Home, Orders, SingleOrder, ManageProduct, ManageSingleProduct, ManageOrders, ManageSingleOrder, AdminUsers } from './components'
 import { me } from './store'
 import { getProducts, getCart } from './store/productReducer'
 import { fetchOrders } from './store/orders'
@@ -23,8 +23,9 @@ class Routes extends Component {
         {/* Routes placed here are available to all visitors */}
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
+        <Route path="/products/category/:category" component={Category} />
         <Route exact path="/products" component={AllProducts} />
-        <Route path="/products/:id" component={SingleProduct} />
+        <Route path="/products/:singleId" component={SingleProduct} />
         <Route path="/cart" component={Cart} />
         <Route path="/checkout" component={Checkout} />
         <Route exact path="/" component={Home} />
@@ -34,6 +35,7 @@ class Routes extends Component {
         <Route path="/manageProduct/:id" component={ManageSingleProduct} />
         <Route exact path="/manageOrders" component={ManageOrders} />
         <Route path="/manageOrders/:id" component={ManageSingleOrder} />
+        <Route path="/manageUser" component={AdminUsers} />
         {isLoggedIn && (
           <Switch>
             {/* Routes placed here are only available after logging in */}
