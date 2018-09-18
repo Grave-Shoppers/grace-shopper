@@ -2,7 +2,6 @@
 import React, {Component} from 'React'
 import {connect} from 'react-redux'
 import {getReviews} from '../store'
-import reviewReducer from '../store/reviewReducer'
 
 const mapStateToProps = state => ({
   reviews: state.reviewReducer.reviews
