@@ -16,7 +16,7 @@ router.get('/:id', async (req, res, next) => {
   try {
     const id = req.params.id
     const foundProduct = await Product.findById(id)
-    console.log('heeeeeeeeeeere', id)
+    // console.log('heeeeeeeeeeere', id)
     res.json(foundProduct)
   } catch (err) {
     res.status(err)
@@ -56,13 +56,12 @@ router.post('/', async (req, res, next) => {
 router.get('/:id/review', async (req, res, next) => {
   try {
     const id = req.params.id
-    const newReview = await Review.create(req.body, {
+    const reviews = await Review.findAll({
       where: {
         productId: id
       }
     })
-
-    res.json(newReview)
+    res.json(reviews)
   } catch (err) {
     next(err)
   }

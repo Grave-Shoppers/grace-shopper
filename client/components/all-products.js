@@ -58,19 +58,19 @@ class AllProducts extends Component {
           <div className="bottom">
             <ul>
               <li>
-                <Link to="/products/costume">Costumes</Link>
+                <Link to="/products/category/costume">Costumes</Link>
               </li>
               <li>
-                <Link to="/products/pet-costume">Pet Costumes</Link>
+                <Link to="/products/category/pet-costume">Pet Costumes</Link>
               </li>
               <li>
-                <Link to="/products/candy">Candy</Link>
+                <Link to="/products/category/candy">Candy</Link>
               </li>
               <li>
-                <Link to="/products/decoration">Decoration</Link>
+                <Link to="/products/category/decoration">Decoration</Link>
               </li>
               <Switch>
-                <Route path="/products/:category" component={Category} />
+                <Route path="/products/category/:category" component={Category} />
               </Switch>
             </ul>
           </div>
