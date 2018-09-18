@@ -53,19 +53,19 @@ async function seed() {
 
   const carts = await Promise.all([
     Cart.create({
-      status: 'open',
+      status: 'OPEN',
       userId: 1
     }),
     Cart.create({
-      status: 'closed',
+      status: 'PROCESSING',
       userId: 1
     }),
     Cart.create({
-      status: 'open',
+      status: 'OPEN',
       userId: 2
     }),
     Cart.create({
-      status: 'closed',
+      status: 'COMPLETED',
       userId: 2
     })
   ])
@@ -130,7 +130,7 @@ async function runSeed() {
   } finally {
     console.log('closing db connection')
     await db.close()
-    console.log('db connection closed')
+    console.log('db connection ')
   }
 }
 

@@ -16,11 +16,11 @@ router.get('/', async (req, res, next) => {
       console.log(user)
       userId = user[0].dataValues.id
       console.log(userId)
-      const products = await Cart.findAll({ where: { userId, status: 'open' } })
+      const products = await Cart.findAll({ where: { userId, status: 'OPEN' } })
       res.status(200).json(products)
     } else {
       userId = userId.id
-      const products = await Cart.findAll({ where: { userId, status: 'open' } })
+      const products = await Cart.findAll({ where: { userId, status: 'OPEN' } })
       res.status(200).json(products)
     }
   } catch (err) {
@@ -60,7 +60,7 @@ router.post('/:productId', async (req, res, next) => {
     const cart = await Cart.findOrCreate({
       where: {
         userId,
-        status: 'open'
+        status: 'OPEN'
       }
     })
     const CartProduct = await CartProducts.create({
@@ -92,7 +92,7 @@ router.put('/:productId', async (req, res, next) => {
       const user = await User.findAll({ where: { sessionId } })
       userId = user[0].id
     } else { userId = userId.id }
-    const cart = await Cart.findAll({ where: { userId, status: 'open' } })
+    const cart = await Cart.findAll({ where: { userId, status: 'OPEN' } })
     const cartId = cart[0].id
     const product = await CartProducts.findAll({ where: { cartId, productId } })
     const updatedCart = await product[0].update({ quantity: req.body.quantity })
@@ -116,7 +116,7 @@ router.delete('/:productId', async (req, res, next) => {
     const cart = await Cart.findAll({
       where: {
         userId,
-        status: 'open'
+        status: 'OPEN'
       }
     })
     const cartId = cart[0].id
