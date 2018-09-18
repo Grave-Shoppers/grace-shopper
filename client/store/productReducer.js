@@ -1,5 +1,5 @@
 import axios from 'axios';
-
+//ieieieieie
 //action types
 const GOT_PRODUCTS = 'GOT_PRODUCTS';
 const GOT_PRODUCT = 'GOT_PRODUCT';
@@ -9,7 +9,7 @@ const ADD_TO_CART = 'ADD_TO_CART'
 const REMOVE_FROM_CART = 'REMOVE_FROM_CART'
 const CHANGE_CART_QUANTITY = 'CHANGE_CART_QUANTITY'
 const CLOSE_CART = 'CLOSE_CART'
-
+const UPDATE_PRODUCT = 'UPDATE_PRODUCT'
 
 //action creators
 export const gotProducts = (products) => ({
@@ -33,8 +33,7 @@ export const closedCart = () => {
 	console.log('got into close cart action creater')
 	return ({ type: CLOSE_CART })
 }
-
-
+export const updatedProduct = (updatedProduct, productId) => ({ type: UPDATE_PRODUCT, updatedProduct, productId })
 
 //thunks
 
@@ -116,6 +115,17 @@ export const closeCart = (cartId) => {
 	}
 }
 
+export const updateProduct = (payload, productId) => {
+	return async (dispatch) => {
+		try {
+			const response = await axios.put(`/api/products/${productId}`, { ...payload })
+			const editedProduct = response.data
+			dispatch(updatedProduct(editedProduct, productId))
+		} catch (err) {
+			console.error(err)
+		}
+	}
+}
 
 //--------reducer
 const initialState = {
@@ -154,7 +164,7 @@ const products = (state = initialState, action) => {
 			return { ...state }
 		}
 		case CLOSE_CART: {
-			return { ...state, cart: [] }
+			return { ...state }
 		}
 		default:
 			return state;

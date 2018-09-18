@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { signup } from '../store';
+import { withRouter } from 'react-router-dom'
 
 class CreateAccount extends Component {
   constructor(props) {
@@ -91,4 +92,4 @@ const mapDispatch = dispatch => {
   }
 };
 
-export default connect(null, mapDispatch)(CreateAccount);
+export default withRouter(connect(null, mapDispatch)(CreateAccount));

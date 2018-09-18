@@ -44,15 +44,25 @@ router.post('/:id/review', async (req, res, next) => {
   }
 })
 
+router.post('/', async (req, res, next) => {
+  try {
+    await Product.create({ ...req.body })
+    res.status(201).send('product added!')
+  } catch (err) {
+    next(err)
+  }
+})
+
 router.get('/:id/review', async (req, res, next) => {
   try {
     const id = req.params.id
-    const reviews = await Review.findAll({
+    const newReview = await Review.create(req.body, {
       where: {
         productId: id
       }
     })
-    res.json(reviews)
+
+    res.json(newReview)
   } catch (err) {
     next(err)
   }
@@ -64,6 +74,17 @@ router.get('/category/:categoryId', async (req, res, next) => {
     const foundCategory = await Product.findByCategory(category)
     if (!foundCategory) res.sendStatus(404)
     res.status(200).json(foundCategory)
+  } catch (err) {
+    next(err)
+  }
+})
+
+router.put('/:id', async (req, res, next) => {
+  const id = req.params.id
+  try {
+    const product = await Product.findById(id)
+    const updatedProduct = await product.update({ ...req.body })
+    res.send(updatedProduct)
   } catch (err) {
     next(err)
   }

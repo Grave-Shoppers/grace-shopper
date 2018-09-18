@@ -57,7 +57,7 @@ async function seed() {
       userId: 1
     }),
     Cart.create({
-      status: 'closed',
+      status: 'processing',
       userId: 1
     }),
     Cart.create({
@@ -65,7 +65,7 @@ async function seed() {
       userId: 2
     }),
     Cart.create({
-      status: 'closed',
+      status: 'completed',
       userId: 2
     })
   ])
@@ -130,7 +130,7 @@ async function runSeed() {
   } finally {
     console.log('closing db connection')
     await db.close()
-    console.log('db connection closed')
+    console.log('db connection ')
   }
 }
 
