@@ -75,51 +75,55 @@ class Cart extends Component {
     for (let i = 0; i < cart.length; i++) {
       total = total + (cart[i].cartProducts.quantity * (cart[i].price / 100))
     }
-    return Math.floor(total * 100) / 100
+    return (Math.floor(total * 100) / 100).toFixed(2)
   }
 
   render() {
     const cart = this.props.cart
-    return <div>
-      {
-        this.props.loaded
-          ? <div>
-            {
-              cart.length > 0
-                ? <div>
-                  <div>Your Cart</div>
-                  <div>
-                    {
-                      cart.map(product => (
-                        <div key={product.id}>
-                          <select defaultValue={product.cartProducts.quantity} productid={product.id} onChange={this.handlePickQuantity}>
-                            {
-                              this.createQuantity(product, cart)
-                            }
-                          </select>
-                          <div>{product.name}</div>
-                          <img src={product.imageUrl} width={250} />
-                          <div>{`Unit Price: $${product.price / 100}`}</div>
-                          <div>{`Price for Item: $${Math.floor(((product.price / 100) * product.cartProducts.quantity) * 100) / 100}`}</div>
-                          <button type="submit" productid={product.id} onClick={() => {
-                            this.removeProduct(product.id)
-                            this.props.getInitialProducts()
-                          }}>Remove From Cart</button>
-                        </div>
-                      ))
-                    }
-                    <div>Total: {this.calculateTotal()}</div>
-                    <Link to={{ pathname: "/checkout", state: { total: this.calculateTotal(), cartId: cart[0].cartProducts.cartId } }}>Check Out</Link>
-                    {/* <button type="submit">Check Out</button> */}
+    return (
+      <div>
+        {
+          this.props.loaded
+            ? <div>
+              {
+                cart.length > 0
+                  ? <div>
+                    <h2 className="cart-header">Your Cart</h2>
+                    <div className="cart-container">
+                      {
+                        cart.map(product => (
+                          <div className="cart-item-container" key={product.id}>
+                            <div>{product.name}</div>
+                            <label>
+                              QTY
+                            <select defaultValue={product.cartProducts.quantity} productid={product.id} onChange={this.handlePickQuantity}>
+                                {
+                                  this.createQuantity(product, cart)
+                                }
+                              </select>
+                            </label>
+                            <img src={product.imageUrl} width={150} />
+                            <div>{`Unit Price: $${product.price / 100}`}</div>
+                            <div>{`Price for Item: $${Math.floor(((product.price / 100) * product.cartProducts.quantity) * 100) / 100}`}</div>
+                            <button type="submit" productid={product.id} onClick={() => {
+                              this.removeProduct(product.id)
+                              this.props.getInitialProducts()
+                            }}>Remove From Cart</button>
+                          </div>
+                        ))
+                      }
+                      <div id="total">Total: ${this.calculateTotal()}</div>
+                      <Link id="checkout-button" to={{ pathname: "/checkout", state: { total: this.calculateTotal(), cartId: cart[0].cartProducts.cartId } }}>Check Out</Link>
+                      {/* <button type="submit">Check Out</button> */}
+                    </div>
                   </div>
-                </div>
-                : <div>Your Cart Is Empty</div>
-            }
-          </div>
-          : <div>Loading Your Cart</div>
-      }
-
-    </div>
+                  : <div>Your Cart Is Empty</div>
+              }
+            </div>
+            : <div>Loading Your Cart</div>
+        }
+      </div>
+    );
   }
 }
 
