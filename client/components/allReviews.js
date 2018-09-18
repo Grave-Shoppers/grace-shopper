@@ -27,8 +27,6 @@ class AllReviews extends Component {
             <div>Review: {review.content}</div>
           </div>
         ))}
-
-        <h2>Mounted</h2>
       </div>
     )
   }
