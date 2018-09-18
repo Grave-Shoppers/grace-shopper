@@ -22,13 +22,14 @@ export class ReviewForm extends Component {
   }
   handleSubmit = event => {
     event.preventDefault()
-    const productId = Number(this.props.selectedProduct.id)
+    const productId = Number(this.props.selectedProduct[0].id)
+
     const review = {
       stars: event.target.stars.value,
       content: event.target.content.value,
       productId: productId
     }
-    console.log('heyyy', this.props.selectedProduct)
+
     this.props.postReview(review, productId)
     event.target.content.value = ''
   }
@@ -37,7 +38,7 @@ export class ReviewForm extends Component {
     return (
       <form onSubmit={this.handleSubmit}>
         <label>Review This Product</label>
-        <input name="content" type="text" onChange={this.handleChange} />
+        <textarea name="content" type="text" onChange={this.handleChange} />
 
         <br />
         <label>RATINGS</label>
