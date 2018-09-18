@@ -76,16 +76,7 @@ router.post('/:productId', async (req, res, next) => {
 router.put('/:cartId/closed', async (req, res, next) => {
   try {
     const cart = await Cart.findAll({ where: { id: req.params.cartId } })
-
-    let closedCart = await cart[0].update({ status: 'closed' })
-    let userId = req.user
-    // let closedCart;
-    if (userId) {
-      userId = req.user.id
-      if (cart[0].userId !== userId) {
-        let revUser = await cart[0].update({ userId })
-      }
-    }
+    const closedCart = await cart[0].update({ status: 'closed' })
     res.send('closed cart!')
   } catch (err) {
     console.error(err)
