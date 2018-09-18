@@ -30,7 +30,7 @@ class Checkout extends Component {
     const newUserInfo = { ...this.state }
     console.log('cart id on state?', this.props.location)
     this.props.closeOpenCart(this.props.location.state.cartId)
-    this.props.updateCurrentUser(newUserInfo, this.props.user.id)
+    // this.props.updateCurrentUser(newUserInfo, this.props.user.id)
   }
 
   render() {

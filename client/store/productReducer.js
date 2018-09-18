@@ -30,7 +30,6 @@ export const addCart = (product) => ({ type: ADD_TO_CART, product })
 export const removedFromCart = (products) => ({ type: REMOVE_FROM_CART, products })
 export const changedCartQuantity = () => ({ type: CHANGE_CART_QUANTITY })
 export const closedCart = () => {
-	console.log('got into close cart action creater')
 	return ({ type: CLOSE_CART })
 }
 export const updatedProduct = (updatedProduct, productId) => ({ type: UPDATE_PRODUCT, updatedProduct, productId })
@@ -107,7 +106,7 @@ export const closeCart = (cartId) => {
 	return async (dispatch) => {
 		try {
 			console.log('got into close cart thunk')
-			const response = await axios.put(`/api/cart/${cartId}/closed`, { status: 'closed' })
+			const response = await axios.put(`/api/cart/${cartId}/closed`, { status: 'processing' })
 			dispatch(closedCart())
 		} catch (err) {
 			console.error(err)
