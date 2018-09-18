@@ -25,15 +25,34 @@ router.get('/:id', async (req, res, next) => {
 })
 
 router.post('/:id/review', async (req, res, next) => {
+  let userId = req.user
+  try {
+    if (userId) {
+      const id = req.params.id
+      const newReview = await Review.create(req.body, {
+        where: {
+          productId: id
+        }
+      })
+
+      res.status(201).json(newReview)
+    } else {
+      res.sendStatus(403).send('No access')
+    }
+  } catch (err) {
+    next(err)
+  }
+})
+
+router.get('/:id/review', async (req, res, next) => {
   try {
     const id = req.params.id
-    const newReview = Review.create(req.body, {
+    const reviews = await Review.findAll({
       where: {
         productId: id
       }
     })
-
-    res.json(newReview)
+    res.json(reviews)
   } catch (err) {
     next(err)
   }

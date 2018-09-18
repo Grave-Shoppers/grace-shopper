@@ -8,6 +8,7 @@ const GOT_CART = 'GOT_CART'
 const ADD_TO_CART = 'ADD_TO_CART'
 const REMOVE_FROM_CART = 'REMOVE_FROM_CART'
 const CHANGE_CART_QUANTITY = 'CHANGE_CART_QUANTITY'
+const CLOSE_CART = 'CLOSE_CART'
 
 
 //action creators
@@ -28,6 +29,10 @@ export const gotCart = (products) => {
 export const addCart = (product) => ({ type: ADD_TO_CART, product })
 export const removedFromCart = (products) => ({ type: REMOVE_FROM_CART, products })
 export const changedCartQuantity = () => ({ type: CHANGE_CART_QUANTITY })
+export const closedCart = () => {
+	console.log('got into close cart action creater')
+	return ({ type: CLOSE_CART })
+}
 
 
 
@@ -92,8 +97,19 @@ export const changeCartQuantity = (productId, quantity) => {
 	return async (dispatch) => {
 		try {
 			const response = await axios.put(`/api/cart/${productId}`, { quantity })
-			console.log('in change quantity thunk', response)
 			dispatch(changedCartQuantity())
+		} catch (err) {
+			console.error(err)
+		}
+	}
+}
+
+export const closeCart = (cartId) => {
+	return async (dispatch) => {
+		try {
+			console.log('got into close cart thunk')
+			const response = await axios.put(`/api/cart/${cartId}/closed`, { status: 'closed' })
+			dispatch(closedCart())
 		} catch (err) {
 			console.error(err)
 		}
@@ -136,6 +152,9 @@ const products = (state = initialState, action) => {
 		}
 		case CHANGE_CART_QUANTITY: {
 			return { ...state }
+		}
+		case CLOSE_CART: {
+			return { ...state, cart: [] }
 		}
 		default:
 			return state;
