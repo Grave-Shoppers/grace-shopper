@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { updateUser } from '../store/user'
+import { closeCart } from '../store/productReducer'
 
 class Checkout extends Component {
   constructor(props) {
@@ -27,7 +28,8 @@ class Checkout extends Component {
   handleSubmit(evt) {
     evt.preventDefault()
     const newUserInfo = { ...this.state }
-    console.log('GOT INTO HANDLE SUBMIT')
+    console.log('cart id on state?', this.props.location)
+    this.props.closeOpenCart(this.props.location.state.cartId)
     this.props.updateCurrentUser(newUserInfo, this.props.user.id)
   }
 
@@ -166,8 +168,13 @@ const mapStateToProps = (state) => ({
   user: state.user
 })
 
-const mapDispatchToProps = (dispatch) => ({
-  updateCurrentUser: (info, userId) => dispatch(updateUser(info, userId))
+const mapDispatchToProps = (dispatch, ownProps) => ({
+  // updateCurrentUser: (info, userId) => dispatch(updateUser(info, userId)),
+  closeOpenCart: (cartId) => {
+    dispatch(closeCart(cartId)).then(() => {
+      ownProps.history.push('/products')
+    })
+  }
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Checkout)
