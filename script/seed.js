@@ -53,19 +53,19 @@ async function seed() {
 
   const carts = await Promise.all([
     Cart.create({
-      status: 'OPEN',
+      status: 'open',
       userId: 1
     }),
     Cart.create({
-      status: 'PROCESSING',
+      status: 'processing',
       userId: 1
     }),
     Cart.create({
-      status: 'OPEN',
+      status: 'open',
       userId: 2
     }),
     Cart.create({
-      status: 'COMPLETED',
+      status: 'completed',
       userId: 2
     })
   ])
