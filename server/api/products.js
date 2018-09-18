@@ -79,6 +79,17 @@ router.get('/category/:categoryId', async (req, res, next) => {
   }
 })
 
+router.put('/:id', async (req, res, next) => {
+  const id = req.params.id
+  try {
+    const product = await Product.findById(id)
+    const updatedProduct = await product.update({ ...req.body })
+    res.send(updatedProduct)
+  } catch (err) {
+    next(err)
+  }
+})
+
 // router.get('/:categoryId/:id', async (req, res, next) => {
 //   try {
 //     const category = req.params.categoryId
