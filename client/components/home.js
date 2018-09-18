@@ -1,5 +1,4 @@
 import React from 'react'
-import AdminUsers from './adminUsers'
 
 const Home = () => {
   return (
@@ -16,9 +15,6 @@ const Home = () => {
       <h2 className="text-center">
         where you can find all your Halloween needs!
       </h2>
-      <div>
-        <AdminUsers />
-      </div>
     </div>
   )
 }

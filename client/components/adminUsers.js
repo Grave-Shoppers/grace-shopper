@@ -38,6 +38,7 @@ class AdminUsers extends Component {
                 type="button"
                 onClick={() => {
                   this.props.deleteUser(user.id)
+                  this.props.getUsers()
                 }}
                 className="btn btn-primary btn-sm"
               >
@@ -48,9 +49,6 @@ class AdminUsers extends Component {
               </div>
             </div>
           ))}
-        </div>
-        <div>
-          <h1>MOUNTED AdminUsers</h1>
         </div>
       </div>
     )
