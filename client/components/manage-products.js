@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import { getProducts, addToCart } from '../store/productReducer'
 import { Link, Route, Switch } from 'react-router-dom'
 // import { Category } from './category'
-
+//ieieieieiie
 const mapStateToProps = state => ({
   products: state.products,
   selectedProduct: state.selectedProduct
