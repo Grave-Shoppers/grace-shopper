@@ -154,7 +154,7 @@ const products = (state = initialState, action) => {
 			return { ...state }
 		}
 		case CLOSE_CART: {
-			return { ...state }
+			return { ...state, cart: [] }
 		}
 		default:
 			return state;
