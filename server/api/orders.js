@@ -10,7 +10,7 @@ router.get('/:id', async (req, res, next) => {
     const order = await Cart.findAll({
       where: {
         id: orderId,
-        status: { [Op.ne]: 'OPEN' }
+        status: { [Op.ne]: 'open' }
       },
       include: [ Product ]
     })
