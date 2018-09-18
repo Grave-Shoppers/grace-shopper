@@ -27,10 +27,8 @@ class Checkout extends Component {
 
   handleSubmit(evt) {
     evt.preventDefault()
-    const newUserInfo = { ...this.state }
-    console.log('cart id on state?', this.props.location)
     this.props.closeOpenCart(this.props.location.state.cartId)
-    // this.props.updateCurrentUser(newUserInfo, this.props.user.id)
+
   }
 
   render() {
