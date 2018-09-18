@@ -2,7 +2,6 @@ import React, { Component } from 'React'
 import { connect } from 'react-redux'
 
 import { getProducts, updateProduct } from '../store/productReducer'
-//eieieieie
 const initialState = {
   name: '',
   price: 0,

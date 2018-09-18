@@ -1,74 +1,33 @@
 import axios from 'axios'
 
-//ACTION TYPES
+
 const ADD_REVIEW = 'ADD_REVIEW'
-const GOT_REVIEWS = 'GOT_REVIEWS'
-const GOT_REVIEW = 'GOT_REVIEW'
 
-//ACTION CREATORS
-export const addReview = content => ({type: ADD_REVIEW, content})
 
-export const gotReviews = reviews => ({type: GOT_REVIEWS, reviews})
+export const addedReview = review => ({ type: ADD_REVIEW, review })
 
-export const gotReview = review => ({type: GOT_REVIEW, review})
 
-//THUNKS
-export const postReview = (newReview, productId) => {
+export const addReview = (stars, content, productId) => {
   return async dispatch => {
-    const response = await axios.post(
-      `/api/products/${productId}/review`,
-      newReview
-    )
+    const response = await axios.post(`/api/products/${productId}/review`)
     const data = response.data
-    const action = addReview(data)
+    const action = addedReview(data)
     dispatch(action)
   }
 }
 
-export const getReviews = productId => {
-  return async dispatch => {
-    try {
-      const response = await axios.get(`/api/products/${productId}/review`)
-      const data = response.data
-      const action = gotReviews(data)
-      dispatch(action)
-    } catch (err) {
-      console.log(err)
-    }
-  }
-}
-
-//REDUCER
-
 const initialState = {
-  newReview: {stars: 1, content: ''},
-  reviews: []
+  products: [],
+  selectedProduct: {},
+  review: []
 }
 
-const reviewReducer = (state = initialState, action) => {
+export default function reducer(state = initialState, action) {
   switch (action.type) {
     case ADD_REVIEW: {
-      return {...state, newReview: action.content}
-    }
-    case GOT_REVIEWS: {
-      return {...state, reviews: action.reviews}
+      return { ...state, review: [...state, action.review] }
     }
     default:
       return state
   }
 }
-
-export default reviewReducer
-
-// export default function reviewReducer(state = initialState, action) {
-//   switch (action.type) {
-//     case ADD_REVIEW: {
-//       return {...state, newReview: action.content}
-//     }
-//     case GOT_REVIEWS: {
-//       return {...state, reviews: action.content}
-//     }
-//     default:
-//       return state
-//   }
-// }
