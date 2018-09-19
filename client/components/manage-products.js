@@ -2,8 +2,7 @@
 import React, { Component } from 'React'
 import { connect } from 'react-redux'
 import { getProducts, addToCart } from '../store/productReducer'
-import { Link, Route, Switch } from 'react-router-dom'
-// import { Category } from './category'
+import { Link } from 'react-router-dom'
 
 const mapStateToProps = state => ({
   products: state.products,
@@ -27,33 +26,6 @@ class ManageProducts extends Component {
   render() {
     return (
       <div className="wrapper">
-        {/* <div id="left" className="column">
-          <div className="top-left">
-            <h2>View by Category</h2>
-          </div>
-          <div className="bottom">
-            <ul>
-              <li>
-                <Link to="/products/category/costume">Costumes</Link>
-              </li>
-              <li>
-                <Link to="/products/category/pet-costume">Pet Costumes</Link>
-              </li>
-              <li>
-                <Link to="/products/category/candy">Candy</Link>
-              </li>
-              <li>
-                <Link to="/products/category/decoration">Decoration</Link>
-              </li>
-              <Switch>
-                <Route
-                  path="/products/category/:category"
-                  component={Category}
-                />
-              </Switch>
-            </ul>
-          </div>
-        </div> */}
 
         <div id="right" className="column">
           <div className="top-right">
