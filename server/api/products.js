@@ -45,6 +45,9 @@ router.post('/:id/review', async (req, res, next) => {
 })
 
 router.post('/', async (req, res, next) => {
+  if (req.user.isAdmin === false) {
+    res.send(404, 'You do not have access ')
+  }
   try {
     await Product.create({ ...req.body })
     res.status(201).send('product added!')
@@ -79,6 +82,9 @@ router.get('/category/:categoryId', async (req, res, next) => {
 })
 
 router.put('/:id', async (req, res, next) => {
+  if (req.user.isAdmin === false) {
+    res.send(404, 'You do not have access ')
+  }
   const id = req.params.id
   try {
     const product = await Product.findById(id)

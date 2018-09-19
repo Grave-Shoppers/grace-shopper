@@ -95,3 +95,48 @@ form div {
   flex-grow: 1;  /*ensures that the container will take up the full height of the parent container*/
   overflow-y: auto;  /*adds scroll to this container*/
 }
+
+/* cart styling */
+
+#cart-background {
+  background-color: orange
+}
+
+#total {
+  font-size: 20px;
+  margin-bottom: 50px;
+}
+
+#checkout-button {
+  text-decoration: none;
+  color: black;
+  background-color: orange;
+  padding: 5px;
+  box-shadow: 2px 2px black;
+}
+
+a:visited {
+  color: black;
+}
+
+.cart-header {
+  text-align: center;
+  font-size: 30px;
+  /* color: orange; */
+}
+
+.cart-container {
+  text-align: center;
+}
+
+.cart-item-container {
+  background-color: orange;
+  margin: 20px;
+  border-color: black;
+  border-style: solid;
+  width: 15%;
+  text-align: center;
+  display: inline-block;
+}
+
+
