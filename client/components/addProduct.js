@@ -22,7 +22,6 @@ class AddProduct extends Component {
   }
 
   componentDidMount() {
-    // this.props.getProducts()
   }
 
   handleSubmit(evt) {
@@ -51,17 +50,6 @@ class AddProduct extends Component {
   }
 
   render() {
-    // const productId = Number(this.props.match.params.id)
-
-    // const selectedProduct = this.props.products.products.filter(
-    //   product => product.id === productId
-    // )
-
-    // if (!selectedProduct[0]) {
-    //   return <h1>loading...</h1>
-    // }
-    // const product = selectedProduct[0]
-
     return (
       <form onSubmit={this.handleSubmit}>
         <div>
@@ -151,15 +139,6 @@ class AddProduct extends Component {
         </button>
         </div>
       </form>
-      // <div>
-      //   <div>
-      //     <h3>{selectedProduct[0].name}</h3>
-      //   </div>
-      //   <img src={selectedProduct[0].imageUrl} width="200" height="200" />
-
-      //   <div>Price: $ {selectedProduct[0].price / 100}</div>
-      //   <div>Description: {selectedProduct[0].description}</div>
-      // </div>
     )
   }
 }

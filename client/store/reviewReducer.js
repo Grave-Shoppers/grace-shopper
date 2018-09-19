@@ -1,36 +1,3 @@
-// import axios from 'axios'
-
-
-// const ADD_REVIEW = 'ADD_REVIEW'
-
-
-// export const addedReview = review => ({ type: ADD_REVIEW, review })
-
-
-// export const addReview = (stars, content, productId) => {
-//   return async dispatch => {
-//     const response = await axios.post(`/api/products/${productId}/review`)
-//     const data = response.data
-//     const action = addedReview(data)
-//     dispatch(action)
-//   }
-// }
-
-// const initialState = {
-//   products: [],
-//   selectedProduct: {},
-//   review: []
-// }
-
-// export default function reducer(state = initialState, action) {
-//   switch (action.type) {
-//     case ADD_REVIEW: {
-//       return { ...state, review: [...state, action.review] }
-//     }
-//     default:
-//       return state
-//   }
-// }
 import axios from 'axios'
 
 //ACTION TYPES
@@ -92,16 +59,3 @@ const reviewReducer = (state = initialState, action) => {
 }
 
 export default reviewReducer
-
-// export default function reviewReducer(state = initialState, action) {
-//   switch (action.type) {
-//     case ADD_REVIEW: {
-//       return {...state, newReview: action.content}
-//     }
-//     case GOT_REVIEWS: {
-//       return {...state, reviews: action.content}
-//     }
-//     default:
-//       return state
-//   }
-// }

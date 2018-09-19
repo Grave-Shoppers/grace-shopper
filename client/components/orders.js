@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { fetchOrders } from '../store/orders'
-import { Link, Route } from 'react-router-dom'
-import { withRouter } from 'react-router'
+import { Link } from 'react-router-dom'
 
 const mapStateToProps = state => ({
   orders: state.orders.orders
@@ -24,10 +23,8 @@ class Orders extends Component {
 
   render() {
     const orders = this.props.orders
-    console.log("props in orders " + this.props)
-    console.log("orders: " + orders)
 
-    return(
+    return (
       <div>
         <h2>Your Past Orders</h2>
         <div>
@@ -41,7 +38,7 @@ class Orders extends Component {
                     <h5>Order Status: {order.status.toUpperCase()}</h5>
                     <Link to={`/orders/${order.id}`}>View Order Details</Link>
                   </div>
-                  <br/>
+                  <br />
                 </ul>
               )
             })

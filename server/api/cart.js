@@ -5,7 +5,7 @@ const Product = require('../db/models/product')
 const { CartProducts } = require('../db/models')
 
 module.exports = router
-//get cart, not orders
+
 router.get('/', async (req, res, next) => {
   console.log(req.sessionID)
   const sessionId = req.sessionID
@@ -13,9 +13,7 @@ router.get('/', async (req, res, next) => {
   try {
     if (!userId) {
       const user = await User.findOrCreate({ where: { sessionId: sessionId } })
-      console.log(user)
       userId = user[0].dataValues.id
-      console.log(userId)
       const products = await Cart.findAll({ where: { userId, status: 'open' } })
       res.status(200).json(products)
     } else {
@@ -76,12 +74,10 @@ router.post('/:productId', async (req, res, next) => {
 router.put('/:cartId/closed', async (req, res, next) => {
   try {
     const cart = await Cart.findAll({ where: { id: req.params.cartId } })
-    // const closedCart = await cart[0].update({ status: 'processing' })
     let closedCart = await cart[0].update({
       status: 'processing'
     })
     let userId = req.user
-    // let closedCart;
     if (userId) {
       userId = req.user.id
       if (cart[0].userId !== userId) {
@@ -142,58 +138,3 @@ router.delete('/:productId', async (req, res, next) => {
     next(error)
   }
 })
-
-//--------DELETE THE BELOW WHEN EVERYTHING IS WORKING-----------
-
-// router.post('/', async (req, res, next) => {
-//   const sessionId = req.sessionID
-//   let userId = req.user
-//   const productId = req.body.productId
-//   try {
-//     if (!userId) {
-//       const user = await User.findOrCreate({ where: { sessionId: sessionId }})
-//       userId = user[0].dataValues.id
-//       console.log('user id type', userId)
-//       await Cart.create({ userId, productId, quantity: 1 })
-//       res.sendStatus(201)
-//     } else {
-//       userId = userId.id
-//       await Cart.create({ userId, productId, quantity: 1 })
-//       res.sendStatus(201)
-//     }
-//   } catch (error) {
-//     next(error)
-//   }
-// })
-
-// router.put('/:productId', async (req, res, next) => {
-//   const userId = req.sessionID
-//   const productId = req.params.productId
-//   try {
-//     const product = await Cart.findAll({
-//       where: {
-//         userId,
-//         productId
-//       }
-//     })
-//     const updatedCart = await product.update({ quantity: req.body.quantity })
-//     res.send(updatedCart)
-//   } catch (error) {
-//     next(error)
-//   }
-// })
-
-// router.delete('/:productId', async (req, res, next) => {
-//   const userId = req.sessionID
-//   const productId = req.params.productId
-//   try {
-//     await Cart.destroy({
-//       where: {
-//         userId,
-//         productId
-//       }
-//     })
-//   } catch (error) {
-//     next(error)
-//   }
-// })

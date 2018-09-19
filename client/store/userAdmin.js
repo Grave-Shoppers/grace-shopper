@@ -10,10 +10,10 @@ const DELETE_USER = 'DELETE_USER'
 /**
  * ACTION CREATORS
  */
-export const gotUsers = users => ({type: GOT_USERS, users})
-export const getUser = user => ({type: GET_USER, user})
+export const gotUsers = users => ({ type: GOT_USERS, users })
+export const getUser = user => ({ type: GET_USER, user })
 
-export const deletedUser = userId => ({type: DELETE_USER, userId})
+export const deletedUser = userId => ({ type: DELETE_USER, userId })
 
 /**
  * THUNK CREATORS
@@ -45,16 +45,6 @@ export const deleteUser = userId => {
   }
 }
 
-// export const updateUser = (info, userId) => async dispatch => {
-//   try {
-//     const res = await axios.put(`api/users/${userId}`, info)
-//     console.log('GOT INTO UPDATE USER THUNK', res)
-//     dispatch(updatedUser(res))
-//   } catch (error) {
-//     console.error(error)
-//   }
-// }
-
 /**
  * INITIAL STATE
  */
@@ -68,7 +58,7 @@ const initialState = {
 const userReducer = (state = initialState, action) => {
   switch (action.type) {
     case GOT_USERS: {
-      return {...state, users: action.users}
+      return { ...state, users: action.users }
     }
     case DELETE_USER: {
       return {

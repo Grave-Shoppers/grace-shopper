@@ -35,25 +35,10 @@ class Checkout extends Component {
     return <div>
       <div>Total Due: {this.props.location.state.total}</div>
       <form onSubmit={this.handleSubmit}>
-        {/* <script
-          src="https://checkout.stripe.com/checkout.js" className="stripe-button"
-          data-key="pk_test_TYooMQauvdEDq54NiTphI7jx"
-          data-amount="999"
-          data-name="Stripe.com"
-          data-description="Example charge"
-          data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
-          data-locale="auto"
-          data-zip-code="true">
-        </script> */}
         <div>
           <div className="form-field">
             <div className="form-div">
               <label>First Name</label>
-              {/* <div
-                className="required-text"
-                hidden={this.state.name !== ''}
-              >(required)
-              </div> */}
             </div>
             <input
               type="text"
@@ -67,11 +52,7 @@ class Checkout extends Component {
           <div className="form-field">
             <div className="form-div">
               <label>Last Name</label>
-              {/* <div
-                className="required-text"
-                hidden={this.state.name !== ''}
-              >(required)
-              </div> */}
+
             </div>
             <input
               type="text"
@@ -85,11 +66,7 @@ class Checkout extends Component {
           <div className="form-field">
             <div className="form-div">
               <label>Address</label>
-              {/* <div
-                className="required-text"
-                hidden={this.state.address !== ''}
-              >(required)
-              </div> */}
+
             </div>
             <input
               type="text"
@@ -103,11 +80,7 @@ class Checkout extends Component {
           <div className="form-field">
             <div className="form-div">
               <label>Email</label>
-              {/* <div
-                className="required-text"
-                hidden={this.state.address !== ''}
-              >(required)
-              </div> */}
+
             </div>
             <input
               type="text"
@@ -121,11 +94,7 @@ class Checkout extends Component {
           <div className="form-field">
             <div className="form-div">
               <label>Credit Card Number</label>
-              {/* <div
-                className="required-text"
-                hidden={this.state.address !== ''}
-              >(required)
-              </div> */}
+
             </div>
             <input
               type="text"
@@ -139,11 +108,7 @@ class Checkout extends Component {
           <div className="form-field">
             <div className="form-div">
               <label>Security Code</label>
-              {/* <div
-                className="required-text"
-                hidden={this.state.address !== ''}
-              >(required)
-              </div> */}
+
             </div>
             <input
               type="text"
@@ -167,7 +132,6 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
-  // updateCurrentUser: (info, userId) => dispatch(updateUser(info, userId)),
   closeOpenCart: (cartId) => {
     dispatch(closeCart(cartId)).then(() => {
       ownProps.history.push('/products')

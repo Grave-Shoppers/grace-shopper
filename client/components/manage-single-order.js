@@ -28,10 +28,10 @@ class SingleOrder extends Component {
   calculateTotal() {
     const products = this.state[0].products
     let total = 0
-    for (let i=0; i < products.length; i++) {
+    for (let i = 0; i < products.length; i++) {
       total = total + (products[i].cartProducts.quantity * (products[i].price / 100))
     }
-    return Math.floor(total*100)/100
+    return Math.floor(total * 100) / 100
   }
 
   handleSubmit(evt) {
@@ -43,18 +43,18 @@ class SingleOrder extends Component {
 
   handleOrderStatusChange(evt) {
     this.setState({
-      status: evt.target.value }
+      status: evt.target.value
+    }
     )
   }
 
   render() {
-    if(!this.state[0]){
+    if (!this.state[0]) {
       return (
         <div><h2>Loading....</h2></div>
       )
     }
     const orderId = this.props.match.params.id
-    console.log(this.state[0])
     const order = this.state[0]
     const products = this.state[0].products
     return (
@@ -70,8 +70,8 @@ class SingleOrder extends Component {
                 <div key={product.id}>
                   <li>{product.name}</li>
                   <li>Quantity: {product.cartProducts.quantity}</li>
-                  <li>Price: ${product.price/100}</li>
-                  <li>Total Amount: ${(product.price*product.cartProducts.quantity)/100}</li>
+                  <li>Price: ${product.price / 100}</li>
+                  <li>Total Amount: ${(product.price * product.cartProducts.quantity) / 100}</li>
                 </div>
               </ul>
             )
@@ -80,20 +80,20 @@ class SingleOrder extends Component {
         <h4>Total: ${this.calculateTotal()}</h4>
 
         <form onSubmit={this.handleSubmit}>
+          <div>
             <div>
-              <div>
-                <label>Change Order Status</label>
-              </div>
-              <select defaultValue={order.status.toUpperCase()} onChange={this.handleOrderStatusChange}>
-                <option>open</option>
-                <option>processing</option>
-                <option>cancelled</option>
-                <option>completed</option>
-              </select>
+              <label>Change Order Status</label>
             </div>
-            <hr />
-            <button type="submit">Submit</button>
-          </form>
+            <select defaultValue={order.status.toUpperCase()} onChange={this.handleOrderStatusChange}>
+              <option>open</option>
+              <option>processing</option>
+              <option>cancelled</option>
+              <option>completed</option>
+            </select>
+          </div>
+          <hr />
+          <button type="submit">Submit</button>
+        </form>
       </div>
     )
   }

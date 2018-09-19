@@ -19,15 +19,12 @@ class Orders extends Component {
 
   componentDidMount() {
     this.props.fetchAllInitialOrders()
-    console.log("order comp mount")
   }
 
   render() {
     const orders = this.props.orders
-    console.log("props in orders " + this.props)
-    console.log("orders: " + orders)
 
-    return(
+    return (
       <div>
         <h2>All Orders</h2>
         <div>
@@ -41,7 +38,7 @@ class Orders extends Component {
                     <h5>Order Status: {order.status.toUpperCase()}</h5>
                     <Link to={`/manageOrders/${order.id}`}>View Order Details</Link>
                   </div>
-                  <br/>
+                  <br />
                 </ul>
               )
             })

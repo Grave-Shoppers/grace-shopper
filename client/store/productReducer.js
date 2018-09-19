@@ -1,5 +1,4 @@
 import axios from 'axios';
-//ieieieieie
 //action types
 const GOT_PRODUCTS = 'GOT_PRODUCTS';
 const GOT_PRODUCT = 'GOT_PRODUCT';
@@ -107,7 +106,6 @@ export const changeCartQuantity = (productId, quantity) => {
 export const closeCart = (cartId) => {
 	return async (dispatch) => {
 		try {
-			console.log('got into close cart thunk')
 			const response = await axios.put(`/api/cart/${cartId}/closed`, { status: 'processing' })
 			dispatch(closedCart())
 		} catch (err) {

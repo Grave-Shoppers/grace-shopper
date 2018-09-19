@@ -16,7 +16,6 @@ router.get('/:id', async (req, res, next) => {
   try {
     const id = req.params.id
     const foundProduct = await Product.findById(id)
-    // console.log('heeeeeeeeeeere', id)
     res.json(foundProduct)
   } catch (err) {
     res.status(err)
@@ -94,18 +93,3 @@ router.put('/:id', async (req, res, next) => {
     next(err)
   }
 })
-
-// router.get('/:categoryId/:id', async (req, res, next) => {
-//   try {
-//     const category = req.params.categoryId
-//     const id = req.params.id
-//     const findCategory = await Product.findByCategory(category)
-//     if (findCategory) {
-//       const idSearch = await Product.findById(id)
-//       if (!idSearch) res.sendStatus(404)
-//       res.status(200).json(idSearch)
-//     }
-//   } catch (err) {
-//     next(err)
-//   }
-// })

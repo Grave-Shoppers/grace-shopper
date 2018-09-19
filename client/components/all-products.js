@@ -29,25 +29,12 @@ class AllProducts extends Component {
     this.props.getProducts();
   }
   addProduct(id) {
-    // this.setState({
-    //   selectedProduct: {
-    //     // imageUrl: imageUrl,
-    //     // name: name,
-    //     // price: price,
-    //     id: id
-    //     // quantity: quantity
-    //   }
-    // });
     this.props.addToCart(id)
   }
 
 
 
   render() {
-    // const productId = Number(this.state.selectedProduct.id)
-    // if (productId !== 0 || productId !== NaN) {
-    //   this.props.addToCart(productId)
-    // }
     return (
       <div className="wrapper">
         <div id="left" className="column">

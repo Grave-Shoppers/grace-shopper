@@ -1,7 +1,7 @@
 'use strict'
-import React, {Component} from 'React'
-import {connect} from 'react-redux'
-import {getUsers, deleteUser} from '../store/userAdmin'
+import React, { Component } from 'React'
+import { connect } from 'react-redux'
+import { getUsers, deleteUser } from '../store/userAdmin'
 
 const mapStateToProps = state => ({
   users: state.userReducer.users
@@ -15,7 +15,6 @@ const mapDispatchToProps = dispatch => ({
 class AdminUsers extends Component {
   constructor() {
     super()
-    // this.state = {}
   }
   componentDidMount() {
     this.props.getUsers()
@@ -23,7 +22,6 @@ class AdminUsers extends Component {
 
   render() {
     const users = this.props.users
-    console.log('here are the users hopefully', users)
     return (
       <div>
         <div>
@@ -54,7 +52,5 @@ class AdminUsers extends Component {
     )
   }
 }
-
-//changesomething
 
 export default connect(mapStateToProps, mapDispatchToProps)(AdminUsers)
