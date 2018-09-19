@@ -6,6 +6,9 @@ module.exports = router
 
 //ADMIN ROUTE
 router.get('/all', async (req, res, next) => {
+  if (req.user.isAdmin === false) {
+    res.send(404, 'You do not have access ')
+  }
   try {
     const orders = await Cart.findAll({
       where: {
@@ -19,6 +22,9 @@ router.get('/all', async (req, res, next) => {
 })
 
 router.get('/all/:id', async (req, res, next) => {
+  if (req.user.isAdmin === false) {
+    res.send(404, 'You do not have access ')
+  }
   try {
     const orderId = req.params.id
     const orders = await Cart.findAll({
@@ -35,6 +41,9 @@ router.get('/all/:id', async (req, res, next) => {
  })
 
  router.put('/all:id', async (req, res, next) => {
+  if (req.user.isAdmin === false) {
+    res.send(404, 'You do not have access ')
+  }
    try {
      const orderId = req.params.id
      const order = await Cart.findAll({

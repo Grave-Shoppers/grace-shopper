@@ -5,11 +5,17 @@ import { Link, Route } from 'react-router-dom'
 import { withRouter } from 'react-router'
 import axios from 'axios'
 
+const initialState = {
+  status: '',
+  products: {},
+}
+
 class SingleOrder extends Component {
   constructor() {
     super()
-    this.state = { order: {} }
+    this.state = { ...initialState }
     this.handleOrderStatusChange = this.handleOrderStatusChange.bind.this
+    this.handleSubmit = this.handleSubmit.this
   }
 
   async componentDidMount() {
@@ -32,13 +38,12 @@ class SingleOrder extends Component {
     evt.preventDefault()
     const updatedOrder = this.state
     const orderId = this.props.match.params.id
-    this.props.fetchSingleOrderAdmin(updatedOrder, productId)
-    this.props.fetchSingleOrderAdmin()
+    this.props.fetchSingleOrderAdmin(updatedOrder, orderId)
   }
 
   handleOrderStatusChange(evt) {
     this.setState({
-      order: { status: evt.target.value } }
+      status: evt.target.value }
     )
   }
 
